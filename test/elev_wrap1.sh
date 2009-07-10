@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.1 $ $Date: 2009/07/07 16:47:04 $
+# $Revision: 1.1 $ $Date: 2009/07/07 17:57:17 $
 #
 ########################################################################
 
@@ -74,7 +74,7 @@ END
 # Compare result with third column.
 awk '{print $1}' input | while read l
 do
-    printf '%7.1f%7.1f\n' $l $r `geog -f '%10.4f' plat $l`
+    printf '%7.1f%7.1f\n' $l $r `geog plat -f '%10.4f' $l`
 done | if diff input -
 then
     echo test1 produced good output
