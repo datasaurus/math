@@ -7,7 +7,7 @@
 
    Please send feedback to dev0@trekix.net
   
-   $Revision: $ $Date: $
+   $Revision: 1.1 $ $Date: 2009/09/16 18:25:19 $
  */
 
 #include <stdio.h>
@@ -39,12 +39,9 @@ int main(int argc, char *argv[])
 	fprintf(stderr, "%s: expected float value for n, got %s\n", cmd, N_s);
 	exit(1);
     }
-
-    /* Uniform steps in log => values differ by a constant factor */
     for (n = 0; n < N; n++) {
-	printf("%f ", lo + log(n + 1) / log(N) * (hi - lo));
+	printf("%d %f\n", n, lo + log(n + 1) / log(N) * (hi - lo));
     }
-    printf("\n");
 
     return 0;
 }

@@ -7,7 +7,7 @@
 
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.1 $ $Date: 2009/09/15 21:42:21 $
+   $Revision: 1.2 $ $Date: 2009/09/16 14:26:34 $
  */
 
 #include <stdio.h>
@@ -16,10 +16,9 @@
 
 int main(int argc, char *argv[])
 {
-    char *cmd = argv[0], *lo_s, *hi_s, *n1_s;
+    char *cmd = argv[0], *lo_s, *hi_s, *N_s;
     double lo, hi;
-    int n, n1;
-    double ni;
+    int n, N;
 
     if (argc != 4) {
 	fprintf(stderr, "Usage: %s lo hi n\n", cmd);
@@ -27,7 +26,7 @@ int main(int argc, char *argv[])
     }
     lo_s = argv[1];
     hi_s = argv[2];
-    n1_s = argv[3];
+    N_s = argv[3];
     if (sscanf(lo_s, "%lf", &lo) != 1) {
 	fprintf(stderr, "%s: expected float value for lo, got %s\n", cmd, lo_s);
 	exit(1);
@@ -36,17 +35,15 @@ int main(int argc, char *argv[])
 	fprintf(stderr, "%s: expected float value for hi, got %s\n", cmd, hi_s);
 	exit(1);
     }
-    if (sscanf(n1_s, "%d", &n1) != 1) {
-	fprintf(stderr, "%s: expected float value for n, got %s\n", cmd, n1_s);
+    if (sscanf(N_s, "%d", &N) != 1) {
+	fprintf(stderr, "%s: expected float value for n, got %s\n", cmd, N_s);
 	exit(1);
     }
-    ni = n1 - 1;
 
     /* Uniform steps in log => values differ by a constant factor */
-    for (n = 0; n < n1; n++) {
-	printf("%f ", lo - 1 + pow(hi + 1 - lo, n / ni));
+    for (n = 0; n < N; n++) {
+	printf("%d %f\n", n, lo - 1 + pow(hi + 1 - lo, (double)n / (N - 1)));
     }
-    printf("\n");
 
     return 0;
 }
