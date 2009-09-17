@@ -2,12 +2,12 @@
  - bighi.c --
  -	Print a sequence of values with bigger steps at high values.
  -
-   Copyright (c) 2009 Gordon D. Carrie
-   All rights reserved.
+
+   Copyright (c) 2009 Gordon D. Carrie. All rights reserved.
 
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.2 $ $Date: 2009/09/16 14:26:34 $
+   $Revision: 1.3 $ $Date: 2009/09/17 19:35:27 $
  */
 
 #include <stdio.h>
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 	exit(1);
     }
 
-    /* Uniform steps in log => values differ by a constant factor */
+    /* Values grow exponentially. */
     for (n = 0; n < N; n++) {
 	printf("%d %f\n", n, lo - 1 + pow(hi + 1 - lo, (double)n / (N - 1)));
     }

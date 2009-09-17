@@ -1,13 +1,13 @@
 /*
  - biglo.c --
- -	Print a sequence of values with bigger steps at low values.
+ -	Print a sequence of values with bigger steps at low (smaller or more
+ -	negative) values.
  -
-   Copyright (c) 2009 Gordon D. Carrie
-   All rights reserved.
+   Copyright (c) 2009 Gordon D. Carrie.  All rights reserved.
 
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.1 $ $Date: 2009/09/16 18:25:19 $
+   $Revision: 1.2 $ $Date: 2009/09/17 19:35:30 $
  */
 
 #include <stdio.h>
@@ -39,6 +39,8 @@ int main(int argc, char *argv[])
 	fprintf(stderr, "%s: expected float value for n, got %s\n", cmd, N_s);
 	exit(1);
     }
+
+    /* Values grow logarithmically. */
     for (n = 0; n < N; n++) {
 	printf("%d %f\n", n, lo + log(n + 1) / log(N) * (hi - lo));
     }
