@@ -7,7 +7,7 @@
 
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.3 $ $Date: 2009/09/17 19:35:27 $
+   $Revision: 1.4 $ $Date: 2009/09/17 19:46:47 $
  */
 
 #include <stdio.h>
@@ -35,8 +35,16 @@ int main(int argc, char *argv[])
 	fprintf(stderr, "%s: expected float value for hi, got %s\n", cmd, hi_s);
 	exit(1);
     }
+    if ( !(lo < hi) ) {
+	fprintf(stderr, "%s: low value must be less than high value\n", cmd);
+	exit(1);
+    }
     if (sscanf(N_s, "%d", &N) != 1) {
-	fprintf(stderr, "%s: expected float value for n, got %s\n", cmd, N_s);
+	fprintf(stderr, "%s: expected integer value for n, got %s\n", cmd, N_s);
+	exit(1);
+    }
+    if (N <= 0) {
+	fprintf(stderr, "%s: Number of values must be positive.\n", cmd);
 	exit(1);
     }
 
