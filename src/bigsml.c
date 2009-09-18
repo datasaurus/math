@@ -7,17 +7,14 @@
 
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.2 $ $Date: 2009/09/18 19:27:06 $
+   $Revision: 1.3 $ $Date: 2009/09/18 20:48:41 $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
-/*
-   This parameter set the relative sizes of the big and small steps.
-   slope at zero crossing = X * slope at end
- */
+/* This parameter sets the ratio of the maximum step size to the minimum */
 double X = 3.0;
 
 int main(int argc, char *argv[])
@@ -25,8 +22,10 @@ int main(int argc, char *argv[])
     char *cmd = argv[0], *lo_s, *hi_s, *N_s;
     double lo, hi;
     int n, N;
-    double n0;	/* Index where value crosses zero */
-    double a, v;
+    double x;
+    double x0;	/* Abscissa where value = lo */
+    double n1;	/* Index where value crosses zero */
+    double a;
 
     if (argc != 4) {
 	fprintf(stderr, "Usage: %s lo hi n\n", cmd);
@@ -57,19 +56,16 @@ int main(int argc, char *argv[])
     }
 
     /* Make two logarithmic curves */
-    n0 = (N - 1) / 2.0;
-    a = ((fabs(lo) > fabs(hi)) ? fabs(lo) : fabs(hi)) / log(X);
-    for (n = 0; n < (int)n0; n++) {
-	v = -a * log(X - n * (X - 1) / n0);
-	if (lo <= v && v <= hi) {
-	    printf("%d %f\n", n, v);
-	}
+    x0 = 2 - exp(-lo / hi * log(X));
+    n1 = (N - 1) / (X - x0) * (1 - x0);
+    a = hi / log(X);
+    for (n = 0; n < n1; n++) {
+	x = x0 + (X - x0) / (N - 1) * n;
+	printf("%d %f\n", n, -a * log(2 - x));
     }
     for ( ; n < N; n++) {
-	v = a * log(2 - X + n * (X - 1) / n0);
-	if (lo <= v && v <= hi) {
-	    printf("%d %f\n", n, v);
-	}
+	x = x0 + (X - x0) / (N - 1) * n;
+	printf("%d %f\n", n, a * log(x));
     }
     return 0;
 }
