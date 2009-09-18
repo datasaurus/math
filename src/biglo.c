@@ -7,12 +7,15 @@
 
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.3 $ $Date: 2009/09/17 19:46:47 $
+   $Revision: 1.4 $ $Date: 2009/09/18 19:49:54 $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+
+/* This parameter sets the ratio of the start slope to the end slope. */
+double X = 2.0;
 
 int main(int argc, char *argv[])
 {
@@ -50,7 +53,7 @@ int main(int argc, char *argv[])
 
     /* Values grow logarithmically. */
     for (n = 0; n < N; n++) {
-	printf("%d %f\n", n, lo + log(n + 1) / log(N) * (hi - lo));
+	printf("%d %f\n", n, lo + (hi - lo) * log(1 + (X - 1) / (N - 1) * n));
     }
 
     return 0;
