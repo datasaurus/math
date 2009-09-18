@@ -7,7 +7,7 @@
 
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.4 $ $Date: 2009/09/18 19:49:54 $
+   $Revision: 1.5 $ $Date: 2009/09/18 21:37:54 $
  */
 
 #include <stdio.h>
@@ -15,7 +15,7 @@
 #include <math.h>
 
 /* This parameter sets the ratio of the start slope to the end slope. */
-double X = 2.0;
+double X = 3.0;
 
 int main(int argc, char *argv[])
 {
