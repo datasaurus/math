@@ -7,7 +7,7 @@
 
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.1 $ $Date: 2009/09/17 19:37:40 $
+   $Revision: 1.2 $ $Date: 2009/09/17 19:46:47 $
  */
 
 #include <stdio.h>
@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
     char *cmd = argv[0], *lo_s, *hi_s, *N_s;
     double lo, hi;
     int n, N;
+    double n0;	/* Index where value crosses zero */
 
     if (argc != 4) {
 	fprintf(stderr, "Usage: %s lo hi n\n", cmd);
@@ -35,26 +36,30 @@ int main(int argc, char *argv[])
 	fprintf(stderr, "%s: expected float value for hi, got %s\n", cmd, hi_s);
 	exit(1);
     }
+    if ( !(lo < hi) ) {
+	fprintf(stderr, "%s: low value must be less than high value\n", cmd);
+	exit(1);
+    }
     if (sscanf(N_s, "%d", &N) != 1) {
-	fprintf(stderr, "%s: expected float value for n, got %s\n", cmd, N_s);
+	fprintf(stderr, "%s: expected integer value for n, got %s\n", cmd, N_s);
+	exit(1);
+    }
+    if (N <= 0) {
+	fprintf(stderr, "%s: Number of values must be positive.\n", cmd);
 	exit(1);
     }
 
     if (lo < 0.0 && hi >= 0.0) {
-	double n0;	/* Index where value crosses zero */
-
+	/* Define two curves that grow exponentially away from n0. */
 	n0 = (N - 1) / (log(1 + hi) / log(1 - lo) + 1);
 	if (n0 < 0.0) {
 	    fprintf(stderr, "Values cross zero at negative n.\n");
 	    exit(1);
 	}
-
-	/* Define two curves that grow exponentially away from n0.
-	   Both have the same curvature.*/
-	for (n = 0; n < (int)n0; n++) {
+	for (n = 0; n < n0; n++) {
 	    printf("%d %f\n", n, 1 - pow(1 - lo, 1 - n / n0));
 	}
-	for (n = (int)n0; n < N; n++) {
+	for ( ; n < N; n++) {
 	    printf("%d %f\n", n, pow(1 - lo, n / n0 - 1) - 1);
 	}
     } else if (lo >= 0.0 && hi > 0.0) {
