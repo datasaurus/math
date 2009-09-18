@@ -7,15 +7,18 @@
 
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.1 $ $Date: 2009/09/18 17:13:19 $
+   $Revision: 1.2 $ $Date: 2009/09/18 19:27:06 $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
-/* This parameter set the relative sizes of the big and small steps */
-double X = 20.0;
+/*
+   This parameter set the relative sizes of the big and small steps.
+   slope at zero crossing = X * slope at end
+ */
+double X = 3.0;
 
 int main(int argc, char *argv[])
 {
@@ -52,10 +55,10 @@ int main(int argc, char *argv[])
 	fprintf(stderr, "%s: Number of values must be positive.\n", cmd);
 	exit(1);
     }
-    n0 = (N - 1) / 2.0;
-    a = ((fabs(lo) > fabs(hi)) ? fabs(lo) : fabs(hi)) / log(X);
 
     /* Make two logarithmic curves */
+    n0 = (N - 1) / 2.0;
+    a = ((fabs(lo) > fabs(hi)) ? fabs(lo) : fabs(hi)) / log(X);
     for (n = 0; n < (int)n0; n++) {
 	v = -a * log(X - n * (X - 1) / n0);
 	if (lo <= v && v <= hi) {
