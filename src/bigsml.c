@@ -7,7 +7,7 @@
 
    Please send feedback to dev0@trekix.net
   
-   $Revision: $ $Date: $
+   $Revision: 1.1 $ $Date: 2009/09/18 17:13:19 $
  */
 
 #include <stdio.h>
@@ -15,13 +15,15 @@
 #include <math.h>
 
 /* This parameter set the relative sizes of the big and small steps */
-double X = 6.0;
+double X = 20.0;
 
 int main(int argc, char *argv[])
 {
     char *cmd = argv[0], *lo_s, *hi_s, *N_s;
     double lo, hi;
     int n, N;
+    double n0;	/* Index where value crosses zero */
+    double a, v;
 
     if (argc != 4) {
 	fprintf(stderr, "Usage: %s lo hi n\n", cmd);
@@ -38,34 +40,32 @@ int main(int argc, char *argv[])
 	fprintf(stderr, "%s: expected float value for hi, got %s\n", cmd, hi_s);
 	exit(1);
     }
-    if (sscanf(N_s, "%d", &N) != 1) {
-	fprintf(stderr, "%s: expected float value for n, got %s\n", cmd, N_s);
+    if ( !(lo < hi) ) {
+	fprintf(stderr, "%s: low value must be less than high value\n", cmd);
 	exit(1);
     }
+    if (sscanf(N_s, "%d", &N) != 1) {
+	fprintf(stderr, "%s: expected integer value for n, got %s\n", cmd, N_s);
+	exit(1);
+    }
+    if (N <= 0) {
+	fprintf(stderr, "%s: Number of values must be positive.\n", cmd);
+	exit(1);
+    }
+    n0 = (N - 1) / 2.0;
+    a = ((fabs(lo) > fabs(hi)) ? fabs(lo) : fabs(hi)) / log(X);
 
-    if (lo < 0.0 && hi >= 0.0) {
-	double n0;	/* Index where value crosses zero */
-	double a;
-
-	n0 = (N - 1) / 2.0;
-	if (n0 < 0.0 || n0 > N - 1) {
-	    fprintf(stderr, "Values cross zero at negative n.\n");
-	    exit(1);
+    /* Make two logarithmic curves */
+    for (n = 0; n < (int)n0; n++) {
+	v = -a * log(X - n * (X - 1) / n0);
+	if (lo <= v && v <= hi) {
+	    printf("%d %f\n", n, v);
 	}
-	a = hi / log(X);
-
-	/* Define two curves that grow logarithmically away from n0. */
-	for (n = 0; n < (int)n0; n++) {
-	    printf("%d %f\n", n, -a * log(X - n * (X - 1) / n0));
-	}
-	for ( ; n < N; n++) {
-	    printf("%d %f\n", n, a * log(2 - X + n * (X - 1) / n0));
-	}
-    } else if (lo >= 0.0 && hi > 0.0) {
-	for (n = 0; n < N; n++) {
-	}
-    } else if (lo <= 0.0 && hi < 0.0) {
-	for (n = 0; n < N; n++) {
+    }
+    for ( ; n < N; n++) {
+	v = a * log(2 - X + n * (X - 1) / n0);
+	if (lo <= v && v <= hi) {
+	    printf("%d %f\n", n, v);
 	}
     }
     return 0;
