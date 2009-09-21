@@ -7,7 +7,7 @@
 
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.3 $ $Date: 2009/09/18 20:48:41 $
+   $Revision: 1.4 $ $Date: 2009/09/18 22:31:02 $
  */
 
 #include <stdio.h>
@@ -15,7 +15,7 @@
 #include <math.h>
 
 /* This parameter sets the ratio of the maximum step size to the minimum */
-double X = 3.0;
+double M = 3.0;
 
 int main(int argc, char *argv[])
 {
@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     double lo, hi;
     int n, N;
     double x;
-    double x0;	/* Abscissa where value = lo */
+    double xl;	/* Abscissa where value = lo */
     double n1;	/* Index where value crosses zero */
     double a;
 
@@ -56,15 +56,15 @@ int main(int argc, char *argv[])
     }
 
     /* Make two logarithmic curves */
-    x0 = 2 - exp(-lo / hi * log(X));
-    n1 = (N - 1) / (X - x0) * (1 - x0);
-    a = hi / log(X);
+    xl = 2 - exp(-lo / hi * log(M));
+    n1 = (N - 1) / (M - xl) * (1 - xl);
+    a = hi / log(M);
     for (n = 0; n < n1; n++) {
-	x = x0 + (X - x0) / (N - 1) * n;
+	x = xl + (M - xl) / (N - 1) * n;
 	printf("%d %f\n", n, -a * log(2 - x));
     }
     for ( ; n < N; n++) {
-	x = x0 + (X - x0) / (N - 1) * n;
+	x = xl + (M - xl) / (N - 1) * n;
 	printf("%d %f\n", n, a * log(x));
     }
     return 0;
