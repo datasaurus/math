@@ -7,12 +7,15 @@
 
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.4 $ $Date: 2009/09/17 19:46:47 $
+   $Revision: 1.5 $ $Date: 2009/09/18 19:49:37 $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+
+/* Ratio of final (high end) slope to starting slope */
+double M = 4.0;
 
 int main(int argc, char *argv[])
 {
@@ -50,7 +53,8 @@ int main(int argc, char *argv[])
 
     /* Values grow exponentially. */
     for (n = 0; n < N; n++) {
-	printf("%d %f\n", n, lo - 1 + pow(hi + 1 - lo, (double)n / (N - 1)));
+	printf("%d %f\n", n,
+		lo + (pow(M, n / (N - 1.0)) - 1.0) * (hi - lo) / (M - 1.0));
     }
 
     return 0;
