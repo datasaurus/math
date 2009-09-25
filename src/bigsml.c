@@ -3,11 +3,11 @@
  -	Print a sequence of values with bigger steps at small magnitude values.
  -
    Copyright (c) 2009 Gordon D. Carrie
-   All rights reserved.
+   All rights reserved
 
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.4 $ $Date: 2009/09/18 22:31:02 $
+   $Revision: 1.5 $ $Date: 2009/09/21 16:04:02 $
  */
 
 #include <stdio.h>

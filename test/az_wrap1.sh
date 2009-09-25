@@ -5,11 +5,11 @@
 #-	Specifically, it tests the lonr (longitude reference function).
 #-
 # Copyright (c) 2009 Gordon D. Carrie
-# Licensed under the Open Software License version 3.0
+# All rights reserved
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.2 $ $Date: 2009/07/07 17:59:05 $
+# $Revision: 1.3 $ $Date: 2009/07/10 22:02:14 $
 #
 ########################################################################
 
@@ -29,7 +29,7 @@ To save temporary files:
 env RM=: ./lonr1.sh 2>&1 | less
 
 Copyright (c) 2009 Gordon D. Carrie
-Licensed under the Open Software License version 3.0
+All rights reserved
 
 ################################################################################
 "

@@ -3,11 +3,12 @@
  -	Print a sequence of values with bigger steps at high values.
  -
 
-   Copyright (c) 2009 Gordon D. Carrie. All rights reserved.
+   Copyright (c) 2009 Gordon D. Carrie
+   All rights reserved
 
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.5 $ $Date: 2009/09/18 19:49:37 $
+   $Revision: 1.6 $ $Date: 2009/09/24 15:09:11 $
  */
 
 #include <stdio.h>
