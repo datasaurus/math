@@ -1,14 +1,14 @@
 /*
- - biglo.c --
- -	Print a sequence of values with bigger steps at low (smaller or more
- -	negative) values.
- -
-   Copyright (c) 2009 Gordon D. Carrie
-   All rights reserved
-
-   Please send feedback to dev0@trekix.net
-  
-   $Revision: 1.6 $ $Date: 2009/09/18 22:07:42 $
+   -	biglo.c --
+   -		Print a sequence of values with bigger steps
+   -		at low (smaller or more negative) values.
+   -	
+   .	Copyright (c) 2009 Gordon D. Carrie
+   .	All rights reserved
+   .
+   .	Please send feedback to dev0@trekix.net
+   .
+   .	$Revision: 1.7 $ $Date: 2009/09/25 21:33:14 $
  */
 
 #include <stdio.h>

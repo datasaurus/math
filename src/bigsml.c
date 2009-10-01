@@ -1,13 +1,14 @@
 /*
- - bigsml.c --
- -	Print a sequence of values with bigger steps at small magnitude values.
- -
-   Copyright (c) 2009 Gordon D. Carrie
-   All rights reserved
-
-   Please send feedback to dev0@trekix.net
-  
-   $Revision: 1.5 $ $Date: 2009/09/21 16:04:02 $
+   -	bigsml.c --
+   -		Print a sequence of values with bigger
+   -		steps at small magnitude values.
+   -	
+   .	Copyright (c) 2009 Gordon D. Carrie
+   .	All rights reserved
+   .
+   .	Please send feedback to dev0@trekix.net
+   .
+   .	$Revision: 1.6 $ $Date: 2009/09/25 21:33:14 $
  */
 
 #include <stdio.h>

@@ -1,13 +1,14 @@
 /*
- - bighi.c --
- -	Print a sequence of values with bigger steps at large magnitude values.
- -
-   Copyright (c) 2009 Gordon D. Carrie
-   All rights reserved
-
-   Please send feedback to dev0@trekix.net
-  
-   $Revision: 1.3 $ $Date: 2009/09/18 19:50:35 $
+   -	bighi.c --
+   -		Print a sequence of values with bigger
+   -		steps at large magnitude values.
+   -	
+   .	Copyright (c) 2009 Gordon D. Carrie
+   .	All rights reserved
+   .
+   .	Please send feedback to dev0@trekix.net
+   .
+   .	$Revision: 1.4 $ $Date: 2009/09/25 21:33:14 $
  */
 
 #include <stdio.h>
