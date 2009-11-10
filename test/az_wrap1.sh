@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.3 $ $Date: 2009/07/10 22:02:14 $
+# $Revision: 1.4 $ $Date: 2009/09/25 21:33:12 $
 #
 ########################################################################
 
@@ -43,6 +43,8 @@ then
     exit 1
 fi
 export PATH=$PWD/src:$PATH
+
+export ANGLE_UNIT="DEGREE"
 
 # Test input.  Columns: longitude reference_longitude geog_lonr_result
 cat > input << END
@@ -110,6 +112,7 @@ END
 
 # For each line of input, give first and second column to 'geog lonr'.
 # Compare result with third column.
+echo Starting test1
 awk '{print $1, $2}' input | while read l r
 do
     printf '%7.1f%7.1f%7.1f\n' $l $r `geog lonr -f '%10.4f' $l $r`
@@ -118,6 +121,20 @@ then
     echo test1 produced good output
 else
     echo test1 produced incorrect output
+fi
+
+# Check for failure with bad angle unit.
+echo Starting test2
+export ANGLE_UNIT="DEGREES"
+r=`geog lonr 0 0 2>&1`
+if [ $? == 0 ]
+then
+    echo test2 FAIL: geog succeeded when it should have reported bad unit
+elif [ "$r" != "geog: Unknown angle unit DEGREES." ]
+then
+    echo test2 FAIL: geog gave incorrect error message
+else
+    echo test2 succeeded
 fi
 
 $RM input

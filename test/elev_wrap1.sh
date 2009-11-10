@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.2 $ $Date: 2009/07/10 22:02:14 $
+# $Revision: 1.3 $ $Date: 2009/09/25 21:33:12 $
 #
 ########################################################################
 
@@ -44,6 +44,8 @@ then
 fi
 export PATH=$PWD/src:$PATH
 
+export ANGLE_UNIT="DEGREE"
+
 # Test input.  Columns: longitude reference_longitude geog_plat_result
 cat > input << END
  -370.0  -10.0
@@ -74,7 +76,7 @@ END
 # Compare result with third column.
 awk '{print $1}' input | while read l
 do
-    printf '%7.1f%7.1f\n' $l $r `geog plat -f '%10.4f' $l`
+    printf '%7.1f%7.1f\n' $l $r `geog latn -f '%10.4f' $l`
 done | if diff input -
 then
     echo test1 produced good output
