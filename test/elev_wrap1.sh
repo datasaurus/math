@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.3 $ $Date: 2009/09/25 21:33:12 $
+# $Revision: 1.4 $ $Date: 2009/11/10 20:01:55 $
 #
 ########################################################################
 
@@ -76,7 +76,7 @@ END
 # Compare result with third column.
 awk '{print $1}' input | while read l
 do
-    printf '%7.1f%7.1f\n' $l $r `geog latn -f '%10.4f' $l`
+    printf '%7.1f%7.1f\n' $l `geog latn $l`
 done | if diff input -
 then
     echo test1 produced good output

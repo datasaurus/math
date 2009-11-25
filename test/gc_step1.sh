@@ -8,7 +8,7 @@
 #
 #	Please send feedback to dev0@trekix.net
 #
-#	$Revision: $ $Date: $
+#	$Revision: 1.1 $ $Date: 2009/11/24 23:10:50 $
 #
 ########################################################################
 
@@ -65,7 +65,7 @@ do
     done
 done
 
-if gunzip -c geod.out.gz | cmp geog.out -
+if gunzip -c geod.out.gz | diff geog.out - > /dev/null
 then
     echo SUCCESS
 else

@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.4 $ $Date: 2009/09/25 21:33:12 $
+# $Revision: 1.5 $ $Date: 2009/11/10 20:01:55 $
 #
 ########################################################################
 
@@ -115,7 +115,7 @@ END
 echo Starting test1
 awk '{print $1, $2}' input | while read l r
 do
-    printf '%7.1f%7.1f%7.1f\n' $l $r `geog lonr -f '%10.4f' $l $r`
+    printf '%7.1f%7.1f%7.1f\n' $l $r `geog lonr $l $r`
 done | if diff input -
 then
     echo test1 produced good output
