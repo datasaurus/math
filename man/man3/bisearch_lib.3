@@ -1,0 +1,24 @@
+.\" 
+.\" Copyright (c) 2009 Gordon D. Carrie
+.\" All rights reserved.
+.\" 
+.\" Please address questions and feedback to dev0@trekix.net
+.\" 
+.\" $Revision: $ $Date: $
+.\"
+.TH geog_lib 3 "geography functions"
+.SH NAME
+BISearch, BISearch_Az \- functions that search for intervals in monotonic arrays
+.SH SYNOPSIS
+.nf
+int BISearch(double, double *, int);
+int BISearch_Az(double, double *, int);
+.fi
+.SH DESCRIPTION
+int BISearch(double x, double *xx, int n);
+Searches array xx of n elements for an interval containing x.
+.PP
+int BISearch_Az(double, double *, int);
+Searches array xx of n angles for an interval containing x.
+.SH AUTHOR
+Gordon Carrie (dev0@trekix.net)

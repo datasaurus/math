@@ -1,0 +1,46 @@
+.\" 
+.\" Copyright (c) 2009 Gordon D. Carrie
+.\" All rights reserved.
+.\" 
+.\" Please address questions and feedback to dev0@trekix.net
+.\" 
+.\" $Revision: 1.17 $ $Date: 2009/12/08 21:01:39 $
+.\"
+.TH angle 3 "angle functions"
+.SH NAME
+Angle_WrapAz, Angle_WrapElev, Angle_GCDist \- angle functions
+.SH SYNOPSIS
+.nf
+\fB#include "angle.h"\fP
+\fBdouble Angle_WrapAz(const double\fP \fIaz\fP, \fBconst double\fP \fIr\fP\fB);\fP
+\fBdouble Angle_WrapElev(const double\fP \fIelev\fP\fB);\fP
+\fBdouble Angle_GCDist(const double\fP \fIaz1\fP, \fBconst double\fP \fIelev1\fP,
+	\fBconst double\fP \fIaz2\fP, \fBconst double\fP \fIelev2\fP\fB);\fP
+\fBdouble Angle_GCAz(const double\fP \fIaz1\fP, \fBconst double\fP \fIelev1\fP,
+	\fBconst double\fP \fIaz2\fP, \fBconst double\fP \fIelev2\fP\fB);\fP
+\fBvoid Angle_GCStep(const double\fP \fIaz\fP, \fBconst double\fP \fIelev\fP,
+	\fBconst double\fP \fIdirn\fP, \fBconst double\fP \fIdist\fP, \fBdouble\fP *az1\fP, \fBdouble\fP *\fIelev1\fP\fB);\fP
+.fi
+.SH DESCRIPTION
+In this context, angles az1 and az2 refer to azimuth, a.k.a. longitude or phi, and
+elev1 and elev2 refer to elevation, also known as latitude or theta.
+Angles are expressed in radians.
+
+\fBAngle_WrapAz\fP returns \fIaz\fP\ +\ i\ *\ \fBpi\fP for some integer i, in the
+interval [\fIr\fP\ -\ \fBpi\fP\ /\ 2,\ \fIr\fP\ +\ \fBpi\fP\ /\ 2).
+
+\fBAngle_WrapElev\fP returns the elevation (latitude) reached by going \fIelev\fP
+radians up (North) from the plane of \fB0\fP elevation (the Equator).
+
+\fBAngle_GCDist\fP returns the great circle distance between points
+(\fIaz1\fP,\ \fIelev1\fP) and (\fIaz2\fP,\ \fIelev2\fP).
+
+\fBAngle_GCAz\fP returns the angle from North clockwise to the great circle
+connecting point (\fIaz1\fP,\ \fIelev1\fP) to point (\fIaz2\fP,\ \fIelev2\fP).
+
+\fBAngle_GCStep\fP computes the azimuth and elevation of the point in direction
+\fIdirn\fP and distance \fIdist\fP along a great circle from point
+(\fIaz\fP,\ \fIelev\fP).  It places the azimuth and elevation of the destination
+point at addresses \fIaz1\fP and \fIelev1\fP respectively.
+.SH AUTHOR
+Gordon Carrie (dev0@trekix.net)
