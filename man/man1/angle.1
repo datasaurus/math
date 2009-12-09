@@ -1,0 +1,52 @@
+.\" 
+.\" Copyright (c) 2009 Gordon D. Carrie
+.\" All rights reserved
+.\" 
+.\" Please address questions and feedback to dev0@trekix.net
+.\" 
+.\" $Revision: 1.11 $ $Date: 2009/12/08 21:01:39 $
+.\"
+.TH angle 3 "angle application"
+.SH NAME
+angle \- angle application
+.SH SYNOPSIS
+\fBangle\fP \fIcommand\fP [\fIcommand_options ...\fP]
+.SH DESCRIPTION
+The \fBangle\fP application manipulates angles on the plane and sphere.
+
+In this context, angles az1 and az2 refer to azimuth, a.k.a. longitude or phi, and
+elev1 and elev2 refer to elevation, also known as latitude or theta.
+
+Angles are measured in radians by default, or if environment variable
+\fBANGLE_UNIT\fP is set to \fBRADIAN\fP.  Angles are measured in degrees if
+environment variable \fBANGLE_UNIT\fP is set to \fBDEGREE\fP.
+
+The \fIcommand\fP argument determines \fBangle\fP's behavior.
+\fIcommand\fP must be one of the following.
+.TP
+\fBangle\fP \fBaz_wrap\fP \fIaz\fP \fIaz0\fP 
+Prints a value that equals \fIaz\fP\ +\ i\ *\ \fBpi\fP for some integer i, and that
+is in the interval [\fIaz0\fP\ -\ \fBpi\fP\ /\ 2,\ \fIaz0\fP\ +\ \fBpi\fP\ /\ 2).
+.TP
+\fBangle\fP \fBelev_wrap\fP \fIelev\fP
+Prints the elevation reached by going \fIelev\fP radians north of the plane
+in which \fIelev\fP\ =\ \fB0\fP (the Equator).
+.TP
+\fBangle\fP \fBgc_dist\fP \fIaz1\fP \fIelev1\fP \fIaz2\fP \fIelev2\fP
+Prints the great circle distance from (\fIaz1\fP,\ \fIelev1\fP) to
+(\fIaz2\fP,\ \fIelev2\fP).
+.TP
+\fBangle\fP \fBgc_dirn\fP \fIaz1\fP \fIelev1\fP \fIaz2\fP \fIelev2\fP
+Prints the azimuth from (\fIaz1\fP,\ \fIelev1\fP) to (\fIaz2\fP,\ \fIelev2\fP).
+.TP
+\fBangle\fP \fBgc_step\fP [\fIaz\fP \fIelev\fP \fIdir\fP \fIdist\fP]
+Prints the azimuth and elevation of the point in direction \fIdir\fP and
+distance \fIdist\fP along a great circle from point (\fIaz\fP,\ \fIelev\fP).
+
+If \fIaz\fP \fIelev\fP \fIdir\fP \fIdist\fP are not given on the command line,
+values are read from standard input.  There will be one line of output for
+every four values read in.
+.SH SEE ALSO
+\fBangle_lib\fP (3), \fBprintf\fP (1)
+.SH AUTHOR
+Gordon Carrie (dev0@trekix.net)
