@@ -1,18 +1,18 @@
 /*
-   -	angle.c --
+   -	angle_lib.c --
    -		This file defines functions that manipulate angles.
-   -		See angle (3).
+   -		See angle_lib (3).
    -
    .	Copyright (c) 2009 Gordon D. Carrie
    .	All rights reserved.
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: $ $Date: $
+   .	$Revision: 1.1 $ $Date: 2009/12/09 21:53:21 $
  */
 
 #include <math.h>
-#include "angle.h"
+#include "angle_lib.h"
 
 double Angle_WrapAz(const double l, const double r)
 {

@@ -1,14 +1,14 @@
 /*
-   -	angle.h --
+   -	angle_lib.h --
    -		Declarations of functions that manipulate angles.
-   -		See angle (3).
+   -		See angle_lib (3).
    -	
    .	Copyright (c) 2009 Gordon D. Carrie
    .	All rights reserved.
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: $ $Date: $
+   .	$Revision: 1.1 $ $Date: 2009/12/09 21:53:32 $
  */
 
 #ifndef ANGLE_H_
