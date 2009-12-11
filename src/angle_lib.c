@@ -8,13 +8,13 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.1 $ $Date: 2009/12/09 21:53:21 $
+   .	$Revision: 1.2 $ $Date: 2009/12/09 22:18:50 $
  */
 
 #include <math.h>
 #include "angle_lib.h"
 
-double Angle_WrapAz(const double l, const double r)
+double Angle_AzWrap(const double l, const double r)
 {
     double l1 = fmod(l, 2.0 * M_PI);
     l1 = (l1 < r - M_PI) ? l1 + 2.0 * M_PI
@@ -22,7 +22,7 @@ double Angle_WrapAz(const double l, const double r)
     return (l1 == -0.0) ? 0.0 : l1;
 }
 
-double Angle_WrapElev(const double l)
+double Angle_ElevWrap(const double l)
 {
     double l1 = fmod(l, 2.0 * M_PI);
     l1 += (l1 < 0.0) ? 2.0 * M_PI : 0.0;
@@ -77,5 +77,5 @@ void Angle_GCStep(const double o1, const double a1, const double d, const double
     y = sin_s * sin_d;
     x = 0.5 * (cos(a1 + s) * (1 + cos_d) + cos(a1 - s) * (1 - cos_d));
     dlon = atan2(y, x);
-    *o2 = Angle_WrapAz(o1 + dlon, 0.0);
+    *o2 = Angle_AzWrap(o1 + dlon, 0.0);
 }

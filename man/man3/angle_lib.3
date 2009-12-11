@@ -4,16 +4,16 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.1 $ $Date: 2009/12/09 21:55:44 $
+.\" $Revision: 1.2 $ $Date: 2009/12/09 22:18:36 $
 .\"
 .TH angle_lib 3 "angle functions"
 .SH NAME
-Angle_WrapAz, Angle_WrapElev, Angle_GCDist \- angle functions
+Angle_AzWrap, Angle_ElevWrap, Angle_GCDist \- angle functions
 .SH SYNOPSIS
 .nf
 \fB#include "angle_lib.h"\fP
-\fBdouble Angle_WrapAz(const double\fP \fIaz\fP, \fBconst double\fP \fIr\fP\fB);\fP
-\fBdouble Angle_WrapElev(const double\fP \fIelev\fP\fB);\fP
+\fBdouble Angle_AzWrap(const double\fP \fIaz\fP, \fBconst double\fP \fIr\fP\fB);\fP
+\fBdouble Angle_ElevWrap(const double\fP \fIelev\fP\fB);\fP
 \fBdouble Angle_GCDist(const double\fP \fIaz1\fP, \fBconst double\fP \fIelev1\fP,
 	\fBconst double\fP \fIaz2\fP, \fBconst double\fP \fIelev2\fP\fB);\fP
 \fBdouble Angle_GCAz(const double\fP \fIaz1\fP, \fBconst double\fP \fIelev1\fP,
@@ -26,10 +26,10 @@ In this context, angles az1 and az2 refer to azimuth, a.k.a. longitude or phi, a
 elev1 and elev2 refer to elevation, also known as latitude or theta.
 Angles are expressed in radians.
 
-\fBAngle_WrapAz\fP returns \fIaz\fP\ +\ i\ *\ \fBpi\fP for some integer i, in the
+\fBAngle_AzWrap\fP returns \fIaz\fP\ +\ i\ *\ \fBpi\fP for some integer i, in the
 interval [\fIr\fP\ -\ \fBpi\fP\ /\ 2,\ \fIr\fP\ +\ \fBpi\fP\ /\ 2).
 
-\fBAngle_WrapElev\fP returns the elevation (latitude) reached by going \fIelev\fP
+\fBAngle_ElevWrap\fP returns the elevation (latitude) reached by going \fIelev\fP
 radians up (North) from the plane of \fB0\fP elevation (the Equator).
 
 \fBAngle_GCDist\fP returns the great circle distance between points

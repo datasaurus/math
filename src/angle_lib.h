@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.1 $ $Date: 2009/12/09 21:53:32 $
+   .	$Revision: 1.2 $ $Date: 2009/12/09 22:18:50 $
  */
 
 #ifndef ANGLE_H_
@@ -27,8 +27,8 @@
 #define DEG_RAD   57.29577951308232087680	/* degrees / radian */
 #endif
 
-double Angle_WrapAz(const double, const double);
-double Angle_WrapElev(const double);
+double Angle_AzWrap(const double, const double);
+double Angle_ElevWrap(const double);
 double Angle_GCDist(const double, const double, const double, const double);
 double Angle_GCAz(const double, const double, const double, const double);
 void Angle_GCStep(const double, const double, const double, const double,
