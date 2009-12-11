@@ -7,7 +7,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.34 $ $Date: 2009/12/08 21:03:49 $
+   .	$Revision: 1.1 $ $Date: 2009/12/09 22:42:35 $
  */
 
 #include <stdlib.h>
@@ -119,7 +119,7 @@ int az_wrap_cb(int argc, char *argv[])
 	return 0;
     }
     c = (use_deg ? RAD_DEG : 1.0);
-    printf("%lf\n", Angle_WrapAz(l * c, r * c) / c);
+    printf("%lf\n", Angle_AzWrap(l * c, r * c) / c);
     return 1;
 }
 
@@ -145,7 +145,7 @@ int elev_wrap_cb(int argc, char *argv[])
 	return 0;
     }
     c = (use_deg ? RAD_DEG : 1.0);
-    printf("%f\n", Angle_WrapElev(l * c) / c);
+    printf("%f\n", Angle_ElevWrap(l * c) / c);
     return 1;
 }
 
