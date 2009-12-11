@@ -1,18 +1,18 @@
 #!/bin/sh
 #
 #-	step1.sh --
-#-		Test "geog step" function.
+#-		Test "angle gc_step" function.
 #-
 #	Copyright (c) 2009 Gordon D. Carrie
 #	All rights reserved
 #
 #	Please send feedback to dev0@trekix.net
 #
-#	$Revision: 1.1 $ $Date: 2009/11/24 23:10:50 $
+#	$Revision: 1.2 $ $Date: 2009/11/25 20:53:33 $
 #
 ########################################################################
 
-# This script compares output from geog with output from
+# This script compares output from angle with output from
 # geod, stored in file geod.out, which was produced as follows:
 #
 # radians per degree
@@ -46,7 +46,7 @@ then
     exit 1
 fi
 
-rm -f geog.out
+rm -f angle.out
 f="(%5.1f %5.1f) dir %3.0f go %3.0f deg => (%10.5f %10.5f)\n"
 for lon in -179 -1 0 1 45 89 91 135 179 180 181 225 270 359
 do
@@ -56,20 +56,20 @@ do
 	do
 	    for d_deg in 0 10 80 100 170 190
 	    do
-		geog step $lon $lat $dir $d_deg \
+		angle gc_step $lon $lat $dir $d_deg \
 		    | (read lon2 lat2
 			    printf "$f" $lon $lat $dir $d_deg $lon2 $lat2) \
-			| sed -e 's/-180/ 180/' -e 's/-0/ 0/' >> geog.out
+			| sed -e 's/-180/ 180/' -e 's/-0/ 0/' >> angle.out
 	    done
 	done
     done
 done
 
-if gunzip -c geod.out.gz | diff geog.out - > /dev/null
+if gunzip -c geod.out.gz | diff angle.out - > /dev/null
 then
     echo SUCCESS
 else
-    echo FAIL: geog.out and geod.out differ
+    echo FAIL: angle.out and geod.out differ
 fi
 
-$RM geog.out
+$RM angle.out
