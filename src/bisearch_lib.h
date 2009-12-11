@@ -8,13 +8,12 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: $ $Date: $
+   .	$Revision: 1.1 $ $Date: 2009/12/09 21:54:33 $
  */
 
 #ifndef BISEARCH_H_
 #define BISEARCH_H_
 
-int BISearch(double, double, int);
-int BISearch_Az(double, double *, int);
+int BISearch(double, double *, int);
 
 #endif
