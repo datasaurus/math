@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.2 $ $Date: 2009/12/11 23:07:48 $
+   .	$Revision: 1.3 $ $Date: 2009/12/14 16:31:42 $
  */
 
 /*
@@ -23,11 +23,13 @@ int BISearch(double x, double *xx, int n)
     int jm;		/* Index for midpoint in bisection search */
     int ju;		/* Index for upper bound */
 
+    /* Interval includes the left boundary (boundary with lesser index). */
+
     jl = 0;
     ju = n - 1;
     if (xx[n - 1] > xx[0]) {
 	/* xx is increasing */ 
-	if (x < xx[0] || x > xx[n - 1]) {
+	if (x < xx[0] || x >= xx[n - 1]) {
 	    return -1;
 	}
 	while (ju - jl > 1) {
@@ -40,15 +42,15 @@ int BISearch(double x, double *xx, int n)
 	}
     } else {
 	/* xx is decreasing */ 
-	if (x > xx[0] || x < xx[n - 1]) {
+	if (x > xx[0] || x <= xx[n - 1]) {
 	    return -1;
 	}
 	while (ju - jl > 1) {
 	    jm = (jl + ju) / 2;
-	    if (x > xx[jm]) {
-		ju = jm;
-	    } else {
+	    if (x <= xx[jm]) {
 		jl = jm;
+	    } else {
+		ju = jm;
 	    }
 	}
     }
