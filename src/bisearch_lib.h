@@ -8,12 +8,13 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.1 $ $Date: 2009/12/09 21:54:33 $
+   .	$Revision: 1.2 $ $Date: 2009/12/11 23:07:48 $
  */
 
 #ifndef BISEARCH_H_
 #define BISEARCH_H_
 
 int BISearch(double, double *, int);
+void BISearchArr(double *, int, double *, int, int *, unsigned *);
 
 #endif
