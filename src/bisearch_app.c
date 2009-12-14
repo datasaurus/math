@@ -7,14 +7,14 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.1 $ $Date: 2009/12/09 22:42:35 $
+   .	$Revision: 1.1 $ $Date: 2009/12/11 23:08:38 $
  */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include "err_msg.h"
-#include "bisearch.h"
+#include "bisearch_lib.h"
 
 int main(int argc, char *argv[])
 {

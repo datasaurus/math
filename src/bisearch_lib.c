@@ -8,14 +8,14 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.1 $ $Date: 2009/12/09 21:54:22 $
+   .	$Revision: 1.2 $ $Date: 2009/12/11 23:07:48 $
  */
 
 /*
 	Ref: Press, et al., Numerical Recipes in C, 2nd Edition.  p. 117.
  */
 
-#include "bisearch.h"
+#include "bisearch_lib.h"
 
 int BISearch(double x, double *xx, int n)
 {
