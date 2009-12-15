@@ -7,7 +7,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.1 $ $Date: 2009/12/11 23:08:38 $
+   .	$Revision: 1.2 $ $Date: 2009/12/14 16:31:42 $
  */
 
 #include <stdlib.h>
@@ -31,9 +31,8 @@ int main(int argc, char *argv[])
 	    exit(1);
 	}
     }
-    printf("Enter a float value: ");
     while (scanf("%lf", &x) == 1) {
-	printf("%d\nEnter a float value: ", BISearch(x, xx, argc - 1));
+	printf("%d\n", BISearch(x, xx, argc - 1));
     }
     free(xx);
 
