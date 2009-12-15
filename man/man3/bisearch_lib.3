@@ -4,21 +4,34 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: $ $Date: $
+.\" $Revision: 1.1 $ $Date: 2009/12/09 21:55:57 $
 .\"
 .TH geog_lib 3 "geography functions"
 .SH NAME
-BISearch, BISearch_Az \- functions that search for intervals in monotonic arrays
+BISearch, BISearchArr \- functions that search for intervals in monotonic arrays
 .SH SYNOPSIS
 .nf
-int BISearch(double, double *, int);
-int BISearch_Az(double, double *, int);
+\fBint BISearch(double\fP \fIx\fP, \fBdouble\fP *\fIxx\fP, \fBint\fP \fIn\fP\fB);\fP
+\fBvoid BISearchArr(double *\fP\fIxx\fP, \fBint\fP \fInx\fP, \fBdouble *\fP\fIvv\fP, \fBint\fP \fInv\fP, \fBint *\fP\fIii\fP,
+	\fBunsigned\fP *\fIc\fP\fB);\fP
 .fi
 .SH DESCRIPTION
-int BISearch(double x, double *xx, int n);
-Searches array xx of n elements for an interval containing x.
+\fBBiSearch\fP searches array \fIxx\fP of \fIn\fP elements for an interval
+containing \fIx\fP.  Array \fIxx\fP must be monotonic.
+If \fIxx\fP is increasing, return value \fIi\fP satisfies
+\fIxx\fP\fB[\fP\fIi\fP\fB]\fP\ \fB<=\fP\ \fIx\fP\ \fB<\fP\ \fIxx\fP\fB[\fP\fIi\fP\fB+1]\fP.
+If \fIxx\fP is decreasing, return value \fIi\fP satisfies
+\fIxx\fP\fB[\fP\fIi\fP\fB]\fP\ \fB>=\fP\ \fIx\fP\ \fB>\fP\ \fIxx\fP\fB[\fP\fIi\fP\fB+1]\fP.
 .PP
-int BISearch_Az(double, double *, int);
-Searches array xx of n angles for an interval containing x.
+\fBBISearchArr\fP computes intervals in \fIvv\fP, a monotonic array of \fInv\fP
+elements, which contain values from \fIxx\fP, an array of \fInx\fP elemets, and
+stores the indeces at \fIii\fP, which should point to storage for \fInx\fP integers.
+Array \fIc\fP receives a count of the number of elements from \fIxx\fP in each
+interval.  It should point to storage for \fInv\fP unsigned integers.
+Upon return, if \fIi\fP\ \fB=\fP\ \fIii[n]\fP, then \fIi\fP satisfies
+\fIvv\fP\fB[\fP\fIi\fP\fB]\fP\ \fB<=\fP\ \fIxx\fP\fB[\fP\fIn\fP\fB]\fP\ \fB<\fP\ \fIvv\fP\fB[\fP\fIi\fP\fB+1]\fP if \fIvv\fP is increasing, or
+\fIvv\fP\fB[\fP\fIi\fP\fB]\fP\ \fB>=\fP\ \fIxx\fP\fB[\fP\fIn\fP\fB]\fP\ \fB>\fP\ \fIvv\fP\fB[\fP\fIi\fP\fB+1]\fP if \fIvv\fP is decreasing, and
+\fIc\fP\fB[\fP\fIi\fP\fB]\fP contains the number of elements from \fIxx\fP that
+satisfy the inequality.
 .SH AUTHOR
 Gordon Carrie (dev0@trekix.net)

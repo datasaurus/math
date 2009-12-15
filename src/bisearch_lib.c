@@ -1,14 +1,14 @@
 /*
    -	BISearch --
    -		Define functions that search arrays for intervals that
-   -		contain given values.
+   -		contain given values.  See bisearch (n).
    -
    .	Copyright (c) 2009 Gordon D. Carrie
    .	All rights reserved.
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.4 $ $Date: 2009/12/14 20:53:24 $
+   .	$Revision: 1.5 $ $Date: 2009/12/14 23:17:15 $
  */
 
 /*
@@ -57,12 +57,6 @@ int BISearch(double x, double *xx, int n)
     return jl;
 }
 
-/*
-   Put doubles from xx, an array of nx elements, into bins vv, an array of nv
-   elements.  ii receives indeces, should point to storage for nx integers.
-   c receives number of xx values given to each vv bin, should have storage
-   for nv integers.
- */
 void BISearchArr(double *xx, int nx, double *vv, int nv, int *ii, unsigned *c)
 {
     int n, i;
