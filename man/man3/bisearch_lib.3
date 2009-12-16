@@ -4,7 +4,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.1 $ $Date: 2009/12/09 21:55:57 $
+.\" $Revision: 1.2 $ $Date: 2009/12/15 20:54:10 $
 .\"
 .TH geog_lib 3 "geography functions"
 .SH NAME
@@ -27,7 +27,7 @@ If \fIxx\fP is decreasing, return value \fIi\fP satisfies
 elements, which contain values from \fIxx\fP, an array of \fInx\fP elemets, and
 stores the indeces at \fIii\fP, which should point to storage for \fInx\fP integers.
 Array \fIc\fP receives a count of the number of elements from \fIxx\fP in each
-interval.  It should point to storage for \fInv\fP unsigned integers.
+interval.  It should point to storage for \fInv\fP\fB\ -\ 1\fP unsigned integers.
 Upon return, if \fIi\fP\ \fB=\fP\ \fIii[n]\fP, then \fIi\fP satisfies
 \fIvv\fP\fB[\fP\fIi\fP\fB]\fP\ \fB<=\fP\ \fIxx\fP\fB[\fP\fIn\fP\fB]\fP\ \fB<\fP\ \fIvv\fP\fB[\fP\fIi\fP\fB+1]\fP if \fIvv\fP is increasing, or
 \fIvv\fP\fB[\fP\fIi\fP\fB]\fP\ \fB>=\fP\ \fIxx\fP\fB[\fP\fIn\fP\fB]\fP\ \fB>\fP\ \fIvv\fP\fB[\fP\fIi\fP\fB+1]\fP if \fIvv\fP is decreasing, and

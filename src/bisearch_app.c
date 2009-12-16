@@ -9,7 +9,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.5 $ $Date: 2009/12/16 16:00:48 $
+   .	$Revision: 1.6 $ $Date: 2009/12/16 16:04:45 $
  */
 
 #include <stdlib.h>
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 	fprintf(stderr, "Could not allocate intervals array.\n");
 	exit(1);
     }
-    if ( !(c = calloc((size_t)nv, sizeof(unsigned))) ) {
+    if ( !(c = calloc((size_t)(nv - 1), sizeof(unsigned))) ) {
 	fprintf(stderr, "Could not allocate count array.\n");
 	exit(1);
     }
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
 	printf("%d\n", ii[n]);
     }
     if ( (f3 = fdopen(3, "w")) ) {
-	for (n = 0; n < nv; n++) {
+	for (n = 0; n < nv - 1; n++) {
 	    fprintf(f3, "%u\n", c[n]);
 	}
     }

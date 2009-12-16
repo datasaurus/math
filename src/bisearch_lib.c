@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.5 $ $Date: 2009/12/14 23:17:15 $
+   .	$Revision: 1.6 $ $Date: 2009/12/15 20:54:10 $
  */
 
 /*
@@ -61,7 +61,7 @@ void BISearchArr(double *xx, int nx, double *vv, int nv, int *ii, unsigned *c)
 {
     int n, i;
 
-    for (n = 0; n < nv; n++) {
+    for (n = 0; n < nv - 1; n++) {
 	c[n] = 0;
     }
     for (n = 0; n < nx; n++) {
