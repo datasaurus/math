@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.6 $ $Date: 2009/11/25 20:53:33 $
+# $Revision: 1.7 $ $Date: 2009/12/11 18:26:10 $
 #
 ########################################################################
 
@@ -43,8 +43,6 @@ then
     exit 1
 fi
 export PATH=$PWD/src:$PATH
-
-export ANGLE_UNIT="DEGREE"
 
 # Test input.  Columns: azimuth reference_azimuth angle_wrapaz_result
 cat > input << END
@@ -113,6 +111,7 @@ END
 # For each line of input, give first and second column to 'angle az_wrap'.
 # Compare result with third column.
 echo Starting test1
+export ANGLE_UNIT="DEGREE"
 awk '{print $1, $2}' input | while read l r
 do
     printf '%7.1f%7.1f%7.1f\n' $l $r `angle az_wrap $l $r`
@@ -122,6 +121,7 @@ then
 else
     echo test1 produced incorrect output
 fi
+$RM input
 
 # Check for failure with bad angle unit.
 echo Starting test2
@@ -137,4 +137,20 @@ else
     echo test2 succeeded
 fi
 
-$RM input
+# Check for round off error at edges
+export ANGLE_UNIT="RADIAN"
+a=`angle az_wrap -2.94159265358979323846 0.2`
+if [ "`printf '%.5g' $a`" != "-2.9416" ]
+then
+    echo "angle az_wrap -2.94159265358979323846 0.2 returned $a => FAILED."
+else
+    echo "angle az_wrap -2.94159265358979323846 0.2 succeeded."
+fi
+export ANGLE_UNIT="DEGREE"
+a=`angle az_wrap -170.0 10.0`
+if [ "`printf '%.1f' $a`" != "-170.0" ]
+then
+    echo angle az_wrap -170.0 10.0 FAILED.
+else
+    echo angle az_wrap -170.0 10.0 succeeded.
+fi

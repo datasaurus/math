@@ -4,7 +4,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.2 $ $Date: 2009/12/09 22:18:36 $
+.\" $Revision: 1.3 $ $Date: 2009/12/11 21:49:35 $
 .\"
 .TH angle_lib 3 "angle functions"
 .SH NAME
@@ -42,5 +42,11 @@ connecting point (\fIaz1\fP,\ \fIelev1\fP) to point (\fIaz2\fP,\ \fIelev2\fP).
 \fIdirn\fP and distance \fIdist\fP along a great circle from point
 (\fIaz\fP,\ \fIelev\fP).  It places the azimuth and elevation of the destination
 point at addresses \fIaz1\fP and \fIelev1\fP respectively.
+.SH BUGS
+\fBAngle_AzWrap\fP is sensitive to round off errors when
+\fB|\fP\fIl\fP\ \fB-\fP\ \fIr\fP\fB|\fP\ \fB=\ pi\fP.  For example,
+if \fIl\fR\ =\ \fB-170.0\fP degrees, \fIr\fP\ =\ \fB10.0\fP degrees, then with
+conversions to and from radians, \fBAngle_AzWrap(l, r)\fP returns \fB-170.0\fP
+degrees on some platforms and \fB190.0\fP degrees on others.
 .SH AUTHOR
 Gordon Carrie (dev0@trekix.net)
