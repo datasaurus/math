@@ -9,7 +9,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.4 $ $Date: 2009/12/15 22:26:31 $
+   .	$Revision: 1.5 $ $Date: 2009/12/16 16:00:48 $
  */
 
 #include <stdlib.h>
@@ -24,7 +24,8 @@ int main(int argc, char *argv[])
     char **ap;
     double *xx, *vv, *p;
     int nx, m, nv;
-    int *ii, *c;
+    int *ii;
+    unsigned *c;
     int n;
     FILE *f3;
 
@@ -85,7 +86,7 @@ int main(int argc, char *argv[])
     }
     if ( (f3 = fdopen(3, "w")) ) {
 	for (n = 0; n < nv; n++) {
-	    fprintf(f3, "%d\n", c[n]);
+	    fprintf(f3, "%u\n", c[n]);
 	}
     }
 
