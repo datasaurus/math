@@ -7,7 +7,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.1 $ $Date: 2009/12/09 22:42:35 $
+   .	$Revision: 1.2 $ $Date: 2009/12/11 23:06:04 $
  */
 
 #include <stdlib.h>
@@ -101,7 +101,7 @@ int az_wrap_cb(int argc, char *argv[])
 	Err_Append(cmd);
 	Err_Append(" ");
 	Err_Append(cmd1);
-	Err_Append("lon reflon\n");
+	Err_Append(" lon reflon\n");
 	return 0;
     }
     l_s = argv[2];
@@ -159,7 +159,7 @@ int gc_dist_cb(int argc, char *argv[])
 	Err_Append(cmd);
 	Err_Append(" ");
 	Err_Append(cmd1);
-	Err_Append("elev1 az1 elev2 az2\n");
+	Err_Append(" elev1 az1 elev2 az2\n");
 	return 0;
     }
     az1_s = argv[2];
@@ -207,7 +207,7 @@ int gc_dirn_cb(int argc, char *argv[])
 	Err_Append(cmd);
 	Err_Append(" ");
 	Err_Append(cmd1);
-	Err_Append("elev1 az1 elev2 az2\n");
+	Err_Append(" elev1 az1 elev2 az2\n");
 	return 0;
     }
     az1_s = argv[2];
