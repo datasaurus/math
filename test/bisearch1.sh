@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: $ $Date: $
+# $Revision: 1.1 $ $Date: 2009/12/14 21:11:40 $
 #
 ########################################################################
 
@@ -35,7 +35,7 @@ All rights reserved
 # Set RM to : in environment to save temporary files.
 RM=${RM:-'rm -f'}
 
-if ! (cd src;make) > /dev/null
+if ! (cd src;make bisearch) > /dev/null
 then
     echo "make failed"
     exit 1
@@ -47,23 +47,41 @@ cat > correct1 << EOF
 -1
 0
 0
+0
 1
 2
+3
 3
 4
 6
 -1
 -1
 EOF
-printf "-9.0  -2.3  -1.1  -0.9  0.0  1.1  1.5  4.3  8.0  9.8" \
-	   | bisearch  -2.3  -1.0  0.0  1.0  1.5  2.0  4.1  8.0 \
+cat > count1 << EOF
+3
+1
+1
+2
+1
+0
+1
+EOF
+printf "-9.0  -2.3  -1.2 -1.1  -0.9  0.0  1.1  1.2  1.5  4.3  8.0  9.8" \
+	   | bisearch  -2.3  -1.0  0.0  1.0  1.5  2.0  4.1  8.0 3> count1.try \
 	   | if diff correct1 -
 	   then
-	       echo test1 produced good output
+	       echo test1 produced correct bin output
 	   else
-	       echo test1 produced incorrect output
+	       echo test1 produced incorrect bin output
 	   fi
+if diff count1 count1.try
+then
+   echo test1 produced correct counts
+else
+   echo test1 produced incorrect counts
+fi
 echo ""
+$RM correct1 count1 count1.try
 
 echo "Starting test2 - search descending array"
 cat > correct2 << EOF
@@ -78,13 +96,27 @@ cat > correct2 << EOF
 -1
 -1
 EOF
+cat > count2 << EOF
+2
+0
+2
+0
+0
+2
+1
+EOF
 printf "9.8  8.0  4.3  1.5  1.1  0.0  -0.9  -1.1  -2.3  -9.0" \
-	   | bisearch 8.0  4.1  2.0  1.0  1.5  0.0  -1.0  -2.3 \
+	   | bisearch 8.0  4.1  2.0  1.0  1.5  0.0  -1.0  -2.3 3> count2.try \
 	   | if diff correct2 -
 	   then
 	       echo test2 produced good output
 	   else
 	       echo test2 produced incorrect output
 	   fi
-
-$RM correct1 correct2
+if diff count2 count2.try
+then
+   echo test2 produced correct counts
+else
+   echo test2 produced incorrect counts
+fi
+$RM correct2 count2 count2.try
