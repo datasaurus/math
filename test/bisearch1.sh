@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.2 $ $Date: 2009/12/16 16:49:55 $
+# $Revision: 1.3 $ $Date: 2009/12/16 16:55:27 $
 #
 ########################################################################
 
@@ -109,7 +109,7 @@ printf -- "9.8  8.0  4.3  1.5  1.1  0.0  -0.9  -1.1  -2.3  -9.0" \
 	   | bisearch 8.0  4.1  2.0  1.0  1.5  0.0  -1.0  -2.3 3> count2.try \
 	   | if diff correct2 -
 	   then
-	       echo test2 produced good output
+	       echo test2 produced correct bin output
 	   else
 	       echo test2 produced incorrect output
 	   fi
