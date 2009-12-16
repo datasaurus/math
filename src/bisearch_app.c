@@ -9,7 +9,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.3 $ $Date: 2009/12/15 20:53:04 $
+   .	$Revision: 1.4 $ $Date: 2009/12/15 22:26:31 $
  */
 
 #include <stdlib.h>
@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
     int nx, m, nv;
     int *ii, *c;
     int n;
+    FILE *f3;
 
     nv = argc - 1;
     if ( !(vv = calloc((size_t)nv, sizeof(double))) ) {
@@ -81,6 +82,11 @@ int main(int argc, char *argv[])
     BISearchArr(xx, nx, vv, nv, ii, c);
     for (n = 0; n < nx; n++) {
 	printf("%d\n", ii[n]);
+    }
+    if ( (f3 = fdopen(3, "w")) ) {
+	for (n = 0; n < nv; n++) {
+	    fprintf(f3, "%d\n", c[n]);
+	}
     }
 
     free(vv);
