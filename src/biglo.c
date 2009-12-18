@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.7 $ $Date: 2009/09/25 21:33:14 $
+   .	$Revision: 1.8 $ $Date: 2009/10/01 22:15:22 $
  */
 
 #include <stdio.h>
@@ -16,12 +16,12 @@
 #include <math.h>
 
 /* This parameter sets the ratio of the start slope to the end slope. */
-double X = 3.0;
+double X = 9.0;
 
 int main(int argc, char *argv[])
 {
     char *cmd = argv[0], *lo_s, *hi_s, *N_s;
-    double lo, hi;
+    double lo, hi, e;
     int n, N;
 
     if (argc != 4) {
@@ -53,8 +53,10 @@ int main(int argc, char *argv[])
     }
 
     /* Values grow logarithmically. */
+    e = exp(1);
     for (n = 0; n < N; n++) {
-	printf("%d %f\n", n, lo + (hi - lo) * log(1 + (X - 1) / (N - 1) * n));
+	printf("%d %f\n", n,
+		lo + (hi - lo) * log(1 + (X - 1) / (N - 1) * n) / log(X));
     }
 
     return 0;
