@@ -30,12 +30,14 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.9 $ $Date: 2009/12/18 21:35:23 $
+   .	$Revision: 1.10 $ $Date: 2011/11/28 16:43:52 $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+
+#define VERSION "1.0"
 
 /* This parameter sets the ratio of the start slope to the end slope. */
 double X = 9.0;
@@ -47,7 +49,7 @@ int main(int argc, char *argv[])
     int n, N;
 
     if (argc != 4) {
-	fprintf(stderr, "Usage: %s lo hi n\n", cmd);
+	fprintf(stderr, "%s %s\nUsage: %s lo hi n\n", cmd, VERSION, cmd);
 	exit(1);
     }
     lo_s = argv[1];

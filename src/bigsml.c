@@ -30,12 +30,14 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.7 $ $Date: 2009/10/01 22:15:22 $
+   .	$Revision: 1.8 $ $Date: 2011/11/28 16:43:52 $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+
+#define VERSION "1.0"
 
 /* This parameter sets the ratio of the maximum step size to the minimum */
 double M = 3.0;
@@ -51,7 +53,7 @@ int main(int argc, char *argv[])
     double a;
 
     if (argc != 4) {
-	fprintf(stderr, "Usage: %s lo hi n\n", cmd);
+	fprintf(stderr, "%s %s\nUsage: %s lo hi n\n", cmd, VERSION, cmd);
 	exit(1);
     }
     lo_s = argv[1];
