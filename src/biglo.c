@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.10 $ $Date: 2011/11/28 16:43:52 $
+   .	$Revision: 1.11 $ $Date: 2012/04/06 21:04:54 $
  */
 
 #include <stdio.h>
@@ -45,7 +45,7 @@ double X = 9.0;
 int main(int argc, char *argv[])
 {
     char *cmd = argv[0], *lo_s, *hi_s, *N_s;
-    double lo, hi, e;
+    double lo, hi;
     int n, N;
 
     if (argc != 4) {
@@ -77,7 +77,6 @@ int main(int argc, char *argv[])
     }
 
     /* Values grow logarithmically. */
-    e = exp(1);
     for (n = 0; n < N; n++) {
 	printf("%d %f\n", n,
 		lo + (hi - lo) * log(1 + (X - 1) / (N - 1) * n) / log(X));
