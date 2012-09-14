@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.7 $ $Date: 2009/12/16 16:18:18 $
+   .	$Revision: 1.8 $ $Date: 2011/11/28 16:43:52 $
  */
 
 /*
@@ -39,7 +39,7 @@
 
 #include "bisearch_lib.h"
 
-int BISearch(double x, double *xx, int n)
+int BISearch(double val, double *bnds, int n_bnds)
 {
     int jl;		/* Index for lower bound */
     int jm;		/* Index for midpoint in bisection search */
@@ -48,28 +48,28 @@ int BISearch(double x, double *xx, int n)
     /* Interval includes the left boundary (boundary with lesser index). */
 
     jl = 0;
-    ju = n - 1;
-    if (xx[n - 1] > xx[0]) {
-	/* xx is increasing */ 
-	if (x < xx[0] || x >= xx[n - 1]) {
+    ju = n_bnds - 1;
+    if (bnds[n_bnds - 1] > bnds[0]) {
+	/* bnds is increasing */ 
+	if (val < bnds[0] || val >= bnds[n_bnds - 1]) {
 	    return -1;
 	}
 	while (ju - jl > 1) {
 	    jm = (jl + ju) / 2;
-	    if (x >= xx[jm]) {
+	    if (val >= bnds[jm]) {
 		jl = jm;
 	    } else {
 		ju = jm;
 	    }
 	}
     } else {
-	/* xx is decreasing */ 
-	if (x > xx[0] || x <= xx[n - 1]) {
+	/* bnds is decreasing */ 
+	if (val > bnds[0] || val <= bnds[n_bnds - 1]) {
 	    return -1;
 	}
 	while (ju - jl > 1) {
 	    jm = (jl + ju) / 2;
-	    if (x <= xx[jm]) {
+	    if (val <= bnds[jm]) {
 		jl = jm;
 	    } else {
 		ju = jm;
@@ -79,16 +79,17 @@ int BISearch(double x, double *xx, int n)
     return jl;
 }
 
-void BISearchArr(double *xx, int nx, double *vv, int nv, int *ii, unsigned *c)
+void BISearchArr(double *bnds, int n_bnds, double *vals, int n_vals, int *idcs,
+	unsigned *c)
 {
     int n, i;
 
-    for (n = 0; n < nv - 1; n++) {
+    for (n = 0; n < n_vals - 1; n++) {
 	c[n] = 0;
     }
-    for (n = 0; n < nx; n++) {
-	i = BISearch(xx[n], vv, nv);
-	ii[n] = i;
+    for (n = 0; n < n_bnds; n++) {
+	i = BISearch(bnds[n], vals, n_vals);
+	idcs[n] = i;
 	if (i != -1) {
 	    c[i]++;
 	}
