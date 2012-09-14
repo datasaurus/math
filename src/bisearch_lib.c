@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.8 $ $Date: 2011/11/28 16:43:52 $
+   .	$Revision: 1.9 $ $Date: 2012/09/14 16:07:05 $
  */
 
 /*
@@ -79,8 +79,8 @@ int BISearch(double val, double *bnds, int n_bnds)
     return jl;
 }
 
-void BISearchArr(double *bnds, int n_bnds, double *vals, int n_vals, int *idcs,
-	unsigned *c)
+void BISearchArr(double *vals, int n_vals, double *bnds, int n_bnds,
+	int *idcs, unsigned *c)
 {
     int n, i;
 

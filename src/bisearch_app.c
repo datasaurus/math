@@ -31,7 +31,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.7 $ $Date: 2009/12/16 16:18:18 $
+   .	$Revision: 1.8 $ $Date: 2011/11/28 16:43:52 $
  */
 
 #include <stdlib.h>
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
     }
 
     /* Bin and print */
-    BISearchArr(xx, nx, vv, nv, ii, c);
+    BISearchArr(vv, nv, xx, nx, ii, c);
     for (n = 0; n < nx; n++) {
 	printf("%d\n", ii[n]);
     }
