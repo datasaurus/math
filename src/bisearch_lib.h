@@ -30,13 +30,12 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.3 $ $Date: 2009/12/14 23:17:15 $
+   .	$Revision: 1.4 $ $Date: 2011/11/28 16:43:52 $
  */
 
 #ifndef BISEARCH_H_
 #define BISEARCH_H_
 
 int BISearch(double, double *, int);
-void BISearchArr(double *, int, double *, int, int *, unsigned *);
 
 #endif

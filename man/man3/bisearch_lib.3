@@ -25,15 +25,14 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.7 $ $Date: 2012/09/14 16:09:55 $
+.\" $Revision: 1.8 $ $Date: 2012/09/14 16:18:43 $
 .\"
 .TH bisearch_lib 3 "binary search functions"
 .SH NAME
-BISearch, BISearchArr \- functions that search for intervals in monotonic arrays
+BISearch \- functions that search for intervals in monotonic arrays
 .SH SYNOPSIS
 .nf
 \fBint BISearch(double\fP \fIval\fP, \fBdouble\fP *\fIbnds\fP, \fBint\fP \fIn_bnds\fP\fB);\fP
-\fBvoid BISearchArr(\fBdouble *\fP\fIvals\fP, \fBint\fP \fIn_vals\fP, double *\fP\fIbnds\fP, \fBint\fP \fIn_bnds\fP, \fBint *\fP\fIidcs\fP, \fBunsigned\fP *\fIc\fP\fB);\fP
 .fi
 .SH DESCRIPTION
 \fBBiSearch\fP searches array \fIbnds\fP of \fIn_bnds\fP elements for an interval
@@ -44,24 +43,5 @@ If \fIbnds\fP is decreasing, return value \fIi\fP satisfies
 \fIbnds\fP\fB[\fP\fIi\fP\fB]\fP\ \fB>=\fP\ \fIval\fP\ \fB>\fP\ \fIbnds\fP\fB[\fP\fIi\fP\fB+1]\fP.
 A return value of \fB-1\fP indicates \fIval\fP is not contained in any interval
 in \fIbnds\fP.
-.PP
-\fBBISearchArr\fP computes intervals in \fIbnds\fP, and monotonic array of
-\fIn_bnds\fP elements, which contain values from \fIvals\fP, an array of
-\fIn_vals\fP elements, and stores the indeces for these intervals at \fIidcs\fP,
-which should point to storage for \fIn_vals\fP integers.
-Array \fIc\fP receives a count of the number of elements from \fIvals\fP in each
-interval.  It should point to storage for \fIn_bnds\fP\fB\ -\ 1\fP unsigned
-integers.
-Upon return, if \fIi\fP\ \fB=\fP\ \fIidcs[n]\fP, then \fIi\fP satisfies
-\fIbnds\fP\fB[\fP\fIi\fP\fB]\fP\ \fB<=\fP\ \fIvals\fP\fB[\fP\fIn\fP\fB]\fP\ \fB<\fP\ \fIbnds\fP\fB[\fP\fIi\fP\fB+1]\fP if \fIbnds\fP is increasing, or
-\fIbnds\fP\fB[\fP\fIi\fP\fB]\fP\ \fB>=\fP\ \fIvals\fP\fB[\fP\fIn\fP\fB]\fP\ \fB>\fP\ \fIbnds\fP\fB[\fP\fIi\fP\fB+1]\fP if \fIbnds\fP is decreasing, and
-\fIc\fP\fB[\fP\fIi\fP\fB]\fP contains the number of elements from \fIbnds\fP that
-satisfy the inequality.
-.PP
-For example, if
-bnds\ =\ {0\ 1\ 2\ 4\ 8}, and
-vals\ =\ {3\ 5\ 0.5}, then on return
-idcs\ =\ {2\ 3\ 0}, and c\ =\ {1\ 0\ 1\ 1\ 0}.
-
 .SH AUTHOR
 Gordon Carrie (dev0@trekix.net)
