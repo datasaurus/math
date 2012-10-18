@@ -25,23 +25,141 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.8 $ $Date: 2012/09/14 16:18:43 $
+.\" $Revision: 1.9 $ $Date: 2012/10/12 21:30:32 $
 .\"
-.TH bisearch_lib 3 "binary search functions"
-.SH NAME
-BISearch \- functions that search for intervals in monotonic arrays
-.SH SYNOPSIS
-.nf
-\fBint BISearch(double\fP \fIval\fP, \fBdouble\fP *\fIbnds\fP, \fBint\fP \fIn_bnds\fP\fB);\fP
-.fi
-.SH DESCRIPTION
-\fBBiSearch\fP searches array \fIbnds\fP of \fIn_bnds\fP elements for an interval
-containing \fIval\fP.  Array \fIbnds\fP must be monotonic.
-If \fIbnds\fP is increasing, return value \fIi\fP satisfies
-\fIbnds\fP\fB[\fP\fIi\fP\fB]\fP\ \fB<=\fP\ \fIval\fP\ \fB<\fP\ \fIbnds\fP\fB[\fP\fIi\fP\fB+1]\fP.
-If \fIbnds\fP is decreasing, return value \fIi\fP satisfies
-\fIbnds\fP\fB[\fP\fIi\fP\fB]\fP\ \fB>=\fP\ \fIval\fP\ \fB>\fP\ \fIbnds\fP\fB[\fP\fIi\fP\fB+1]\fP.
-A return value of \fB-1\fP indicates \fIval\fP is not contained in any interval
-in \fIbnds\fP.
-.SH AUTHOR
-Gordon Carrie (dev0@trekix.net)
+.Pp
+.Dd $Mdocdate$
+.Dt BISEARCH_LIB 3
+.Os UNIX
+.Sh NAME
+.Nm BISearchD,
+.Nm BISearchF
+.Nd collect data from monotonic arrays into bins with bisection
+.Sh SYNOPSIS
+.Fd "#include <bisearch_lib.h>"
+.Ft int
+.Fn BISearchD "double datum" "double *bnds" "int n_bnds"
+.Ft int
+.Fn BISearchF "float datum" "float *bnds" "int n_bnds"
+.Ft void
+.Fn *BISearch_DDataToList "double *data" "int n_data" "double *bnds" "int n_bnds" "int *lists"
+.Ft void
+.Fn *BISearch_FDataToList "float *data" "int n_data" "float *bnds" "int n_bnds" "int *lists"
+.Ft int
+.Fn BISearch_1stIndex "int *lists" "int n_interval"
+.Ft int
+.Fn BISearch_NextIndex "int *lists" "int n_datum"
+.Sh DESCRIPTION
+.Fn BiSearchD
+and
+.Fn BiSearchF
+search array
+.Fa bnds
+of 
+.Fa n_bnds
+elements for an interval containing
+.Fa datum .
+Array
+.Fa bnds
+must be monotonic.
+.Pp
+If
+.Fa bnds
+is increasing, return value
+.Li i
+satisfies
+.Bd -literal -offset indent
+bnds[i] <= datum < bnds[i+1]
+.Ed
+.Pp
+If
+.Fa bnds
+is decreasing, return value
+.Li i
+satisfies
+.Bd -literal -offset indent
+bnds[i] >= datum > bnds[i+1]
+.Ed
+.Pp
+A return value of
+.Li -1
+indicates
+.Fa datum
+is not contained in any interval
+in
+.Fa bnds .
+.Pp
+.Fn BISearch_DDataToList
+and
+.Fn BISearch_FDataToList
+bin values from
+.Fa data
+into intervals bounded by values from monotonic array
+.Fa bnds .
+.Fa data
+and
+.Fa bnds
+have
+.Fa n_data
+and
+.Fa n_bnds
+elements, respectively. Indeces of elements from
+.Fa data
+that share the same interval from
+.Fa bnds
+are collected into linked lists returned in
+.Fa lists ,
+which must point to storage for
+.Fa n_bnds
++
+.Fa n_data
+.Li int
+values.
+.Pp
+.Fn BISearch_1stIndex
+returns the index of the first element from a data array that falls within
+interval
+.Fa n_interval
+of a bounds array given to
+.Fn BISearch_DDataToList
+or
+.Fn BISearch_FDataToList .
+.Fa lists
+must be a return value from
+.Fn BISearch_DDataToList
+or
+.Fn BISearch_FDataToList .
+.Pp
+.Fn BISearch_NextIndex
+returns the index of the next element from a data array that falls within
+the same interval as element
+.Fa n_datum
+of the data array, or
+.Li -1
+if no more values from data occupy the interval.
+.Fa lists
+must be a return value from
+.Fn BISearch_DDataToList
+or
+.Fn BISearch_FDataToList .
+.Pp
+Here is a usage example.
+.Bd -literal -offset indent
+    BISearch_DDataToList(xx, nx, bnds, n_bnds, lists);
+    n_intvls = n_bnds - 1;
+    for (n = 0; n < n_intvls; n++) {
+	int i;				/* Interval index */
+
+	printf("Interval bounded by %.2f to %.2f ", bnds[n], bnds[n + 1]);
+	printf("contains ");
+	for (i = BISearch_1stIndex(lists, n); i != -1; ) {
+	    printf("%.2f ", xx[i]);
+	    i = BISearch_NextIndex(lists, i);
+	}
+	printf("\\n");
+    }
+.Ed
+.Pp
+.Sh AUTHOR
+.An "Gordon Carrie"
+.Aq dev0@trekix.net
