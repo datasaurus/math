@@ -30,27 +30,25 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.10 $ $Date: 2012/09/14 16:18:43 $
+   .	$Revision: 1.11 $ $Date: 2012/10/12 21:28:51 $
  */
 
 /*
 	Ref: Press, et al., Numerical Recipes in C, 2nd Edition.  p. 117.
  */
 
+#include <stdio.h>
 #include "bisearch_lib.h"
 
-int BISearch(double val, double *bnds, int n_bnds)
+int BISearchD(double val, double *bnds, int n_bnds)
 {
     int jl;		/* Index for lower bound */
     int jm;		/* Index for midpoint in bisection search */
     int ju;		/* Index for upper bound */
 
-    /* Interval includes the left boundary (boundary with lesser index). */
-
     jl = 0;
     ju = n_bnds - 1;
-    if (bnds[n_bnds - 1] > bnds[0]) {
-	/* bnds is increasing */ 
+    if (bnds[n_bnds - 1] > bnds[0]) {	/* bnds is increasing */ 
 	if (val < bnds[0] || val >= bnds[n_bnds - 1]) {
 	    return -1;
 	}
@@ -62,8 +60,7 @@ int BISearch(double val, double *bnds, int n_bnds)
 		ju = jm;
 	    }
 	}
-    } else {
-	/* bnds is decreasing */ 
+    } else {				/* bnds is decreasing */ 
 	if (val > bnds[0] || val <= bnds[n_bnds - 1]) {
 	    return -1;
 	}
@@ -77,4 +74,154 @@ int BISearch(double val, double *bnds, int n_bnds)
 	}
     }
     return jl;
+}
+int BISearchF(float val, float *bnds, int n_bnds)
+{
+    int jl;		/* Index for lower bound */
+    int jm;		/* Index for midpoint in bisection search */
+    int ju;		/* Index for upper bound */
+
+    jl = 0;
+    ju = n_bnds - 1;
+    if (bnds[n_bnds - 1] > bnds[0]) {	/* bnds is increasing */ 
+	if (val < bnds[0] || val >= bnds[n_bnds - 1]) {
+	    return -1;
+	}
+	while (ju - jl > 1) {
+	    jm = (jl + ju) / 2;
+	    if (val >= bnds[jm]) {
+		jl = jm;
+	    } else {
+		ju = jm;
+	    }
+	}
+    } else {				/* bnds is decreasing */ 
+	if (val > bnds[0] || val <= bnds[n_bnds - 1]) {
+	    return -1;
+	}
+	while (ju - jl > 1) {
+	    jm = (jl + ju) / 2;
+	    if (val <= bnds[jm]) {
+		jl = jm;
+	    } else {
+		ju = jm;
+	    }
+	}
+    }
+    return jl;
+}
+
+/*
+   Put values that share intervals into linked lists for array data, which
+   has n_data elements.  List indeces are placed into list, which must point
+   to storage for n_data + n_bnds elements. Use DataType_1stIndex and
+   DataType_NextIndex to retrieve elements from data which occupy a given
+   interval.
+ */
+
+/*
+   BISearch_1stIndex and BISearch_NextIndex use the return value as follows.
+
+   Suppose the dat is the array of binned data, and bnds is the array of
+   data boundaries into which data from dat are binned.
+   Then traverse the linked list like this:
+   Let m0 = heads[n].
+   Let m1 = indeces[m0].
+   Let m2 = indeces[m1].
+   Let m3 = indeces[m2].
+   And so on.
+
+   Then bnds[n] <= dat[m0] < bnds[n+1].
+   Then bnds[n] <= dat[m1] < bnds[n+1].
+   Then bnds[n] <= dat[m2] < bnds[n+1].
+   Then bnds[n] <= dat[m3] < bnds[n+1].
+   And so on.
+
+   A value in indeces of -1 indicates end of list for the interval for
+   interval n.
+ */
+
+int *BISearch_DDataToList(double *data, int n_data, double *bnds, int n_bnds,
+	int *list)
+{
+    int n_intvls;
+    int *heads, *indeces;
+    int n, n_intvl, n_datum;
+
+    for (n = 0; n < n_data + n_bnds; n++) {
+	list[n] = -1;
+    }
+    if ( !data || n_data == 0 || !bnds || n_bnds == 0 ) {
+	return list;
+    }
+    n_intvls = n_bnds - 1;
+    list[0] = n_intvls;
+    heads = list + 1;
+    indeces = list + 1 + n_intvls;
+
+    /* Traverse data array in reverse so that indeces in lists will increase. */
+    for (n_datum = n_data - 1; n_datum >= 0; n_datum--) {
+	if ( (n_intvl = BISearchD(data[n_datum], bnds, n_bnds)) >= 0 ) {
+	    if ( heads[n_intvl] == -1 ) {
+		heads[n_intvl] = n_datum;
+	    } else {
+		indeces[n_datum] = heads[n_intvl];
+		heads[n_intvl] = n_datum;
+	    }
+	}
+    }
+    return list;
+}
+int *BISearch_FDataToList(float *data, int n_data, float *bnds, int n_bnds,
+	int *list)
+{
+    int n_intvls;
+    int *heads, *indeces;
+    int n, n_intvl, n_datum;
+
+    for (n = 0; n < n_data + n_bnds; n++) {
+	list[n] = -1;
+    }
+    if ( !data || n_data == 0 || !bnds || n_bnds == 0 ) {
+	return list;
+    }
+    n_intvls = n_bnds - 1;
+    list[0] = n_intvls;
+    heads = list + 1;
+    indeces = list + 1 + n_intvls;
+
+    /* Traverse data array in reverse so that indeces in lists will increase. */
+    for (n_datum = n_data - 1; n_datum >= 0; n_datum--) {
+	if ( (n_intvl = BISearchF(data[n_datum], bnds, n_bnds)) >= 0 ) {
+	    if ( heads[n_intvl] == -1 ) {
+		heads[n_intvl] = n_datum;
+	    } else {
+		indeces[n_datum] = heads[n_intvl];
+		heads[n_intvl] = n_datum;
+	    }
+	}
+    }
+    return list;
+}
+
+/*
+   Return index of first element from data array that produced list
+   whose value occupies data range n_intvl, or -1 if no element from
+   data occupies that interval.
+ */
+
+int BISearch_1stIndex(int *list, int n_intvl)
+{
+    return list[n_intvl + 1];
+}
+
+/*
+   Return index of next element from data array that produced list
+   whose value occupies same data range as data[nd], or -1 if no more
+   data occupy the interval.
+ */
+
+int BISearch_NextIndex(int *list, int n_datum)
+{
+    return *(list + 1 + list[0] + n_datum);
 }
