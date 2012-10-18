@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.11 $ $Date: 2012/10/12 21:28:51 $
+   .	$Revision: 1.12 $ $Date: 2012/10/18 19:27:25 $
  */
 
 /*
@@ -141,23 +141,23 @@ int BISearchF(float val, float *bnds, int n_bnds)
    interval n.
  */
 
-int *BISearch_DDataToList(double *data, int n_data, double *bnds, int n_bnds,
-	int *list)
+void BISearch_DDataToList(double *data, int n_data, double *bnds, int n_bnds,
+	int *lists)
 {
     int n_intvls;
     int *heads, *indeces;
     int n, n_intvl, n_datum;
 
     for (n = 0; n < n_data + n_bnds; n++) {
-	list[n] = -1;
+	lists[n] = -1;
     }
     if ( !data || n_data == 0 || !bnds || n_bnds == 0 ) {
-	return list;
+	return;
     }
     n_intvls = n_bnds - 1;
-    list[0] = n_intvls;
-    heads = list + 1;
-    indeces = list + 1 + n_intvls;
+    lists[0] = n_intvls;
+    heads = lists + 1;
+    indeces = lists + 1 + n_intvls;
 
     /* Traverse data array in reverse so that indeces in lists will increase. */
     for (n_datum = n_data - 1; n_datum >= 0; n_datum--) {
@@ -170,25 +170,24 @@ int *BISearch_DDataToList(double *data, int n_data, double *bnds, int n_bnds,
 	    }
 	}
     }
-    return list;
 }
-int *BISearch_FDataToList(float *data, int n_data, float *bnds, int n_bnds,
-	int *list)
+void BISearch_FDataToList(float *data, int n_data, float *bnds, int n_bnds,
+	int *lists)
 {
     int n_intvls;
     int *heads, *indeces;
     int n, n_intvl, n_datum;
 
     for (n = 0; n < n_data + n_bnds; n++) {
-	list[n] = -1;
+	lists[n] = -1;
     }
     if ( !data || n_data == 0 || !bnds || n_bnds == 0 ) {
-	return list;
+	return;
     }
     n_intvls = n_bnds - 1;
-    list[0] = n_intvls;
-    heads = list + 1;
-    indeces = list + 1 + n_intvls;
+    lists[0] = n_intvls;
+    heads = lists + 1;
+    indeces = lists + 1 + n_intvls;
 
     /* Traverse data array in reverse so that indeces in lists will increase. */
     for (n_datum = n_data - 1; n_datum >= 0; n_datum--) {
@@ -201,27 +200,26 @@ int *BISearch_FDataToList(float *data, int n_data, float *bnds, int n_bnds,
 	    }
 	}
     }
-    return list;
 }
 
 /*
-   Return index of first element from data array that produced list
+   Return index of first element from data array that produced lists
    whose value occupies data range n_intvl, or -1 if no element from
    data occupies that interval.
  */
 
-int BISearch_1stIndex(int *list, int n_intvl)
+int BISearch_1stIndex(int *lists, int n_intvl)
 {
-    return list[n_intvl + 1];
+    return lists[n_intvl + 1];
 }
 
 /*
-   Return index of next element from data array that produced list
+   Return index of next element from data array that produced lists
    whose value occupies same data range as data[nd], or -1 if no more
    data occupy the interval.
  */
 
-int BISearch_NextIndex(int *list, int n_datum)
+int BISearch_NextIndex(int *lists, int n_datum)
 {
-    return *(list + 1 + list[0] + n_datum);
+    return *(lists + 1 + lists[0] + n_datum);
 }

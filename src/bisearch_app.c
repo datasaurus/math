@@ -31,7 +31,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.9 $ $Date: 2012/09/14 16:18:43 $
+   .	$Revision: 1.10 $ $Date: 2012/10/18 19:27:39 $
  */
 
 #include <stdlib.h>
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
     double *xx, *x;		/* Data values */
     int nx;			/* Number of data values */
     int nx_max;			/* Max nx for allocation at xx */
-    int *list;			/* Interval list */
+    int *lists;			/* Interval list */
 
     nb = argc - 1;
     if ( !(bnds = CALLOC((size_t)nb, sizeof(double))) ) {
@@ -94,26 +94,26 @@ int main(int argc, char *argv[])
 	}
     }
     nx = x - xx;
-    if ( !(list = CALLOC((size_t)(nb + nx), sizeof(int))) ) {
+    if ( !(lists = CALLOC((size_t)(nb + nx), sizeof(int))) ) {
 	fprintf(stderr, "Could not allocate index array.\n");
 	exit(1);
     }
 
     /* Bin and print */
-    list = BISearch_DDataToList(xx, nx, bnds, nb, list);
+    BISearch_DDataToList(xx, nx, bnds, nb, lists);
     for (n = 0; n < nb - 1; n++) {
 	int i;				/* Interval index */
 
 	printf("%.2f to %.2f: ", bnds[n], bnds[n + 1]);
-	for (i = BISearch_1stIndex(list, n); i != -1; ) {
+	for (i = BISearch_1stIndex(lists, n); i != -1; ) {
 	    printf("%.2f ", xx[i]);
-	    i = BISearch_NextIndex(list, i);
+	    i = BISearch_NextIndex(lists, i);
 	}
 	printf("\n");
     }
 
     FREE(bnds);
-    FREE(list);
+    FREE(lists);
     FREE(xx);
 
     return 0;
