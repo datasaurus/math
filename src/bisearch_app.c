@@ -31,91 +31,90 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.8 $ $Date: 2011/11/28 16:43:52 $
+   .	$Revision: 1.9 $ $Date: 2012/09/14 16:18:43 $
  */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
-#include "err_msg.h"
+#include "alloc.h"
 #include "bisearch_lib.h"
 
 int main(int argc, char *argv[])
 {
-    char **ap;
-    double *xx, *vv, *p;
-    int nx, m, nv;
-    int *ii;
-    unsigned *c;
-    int n;
-    FILE *f3;
+    char **ap;			/* Point into argv */
+    double *bnds, *bnd;		/* Boundaries of data intervals */
+    int nb;			/* Number of boundaries
+				   = number of data interals + 1 */
+    int n;			/* Index from bnds */
+    double *xx, *x;		/* Data values */
+    int nx;			/* Number of data values */
+    int nx_max;			/* Max nx for allocation at xx */
+    int *list;			/* Interval list */
 
-    nv = argc - 1;
-    if ( !(vv = calloc((size_t)nv, sizeof(double))) ) {
+    nb = argc - 1;
+    if ( !(bnds = CALLOC((size_t)nb, sizeof(double))) ) {
 	fprintf(stderr, "Could not allocate intervals array.\n");
-	exit(1);
-    }
-    if ( !(c = calloc((size_t)(nv - 1), sizeof(unsigned))) ) {
-	fprintf(stderr, "Could not allocate count array.\n");
 	exit(1);
     }
 
     /* Get interval boundaries from command line */
-    for (ap = argv + 1, p = vv; *ap; ap++, p++) {
-	if (sscanf(*ap, "%lf", p) != 1) {
+    for (ap = argv + 1, bnd = bnds; *ap; ap++, bnd++) {
+	if (sscanf(*ap, "%lf", bnd) != 1) {
 	    fprintf(stderr, "Expected float value, got %s.\n", *ap);
 	    exit(1);
 	}
     }
 
     /* Get value array from stdin */
-    m = 1;
-    if ( !(xx = calloc((size_t)m, sizeof(double))) ) {
+    nx_max = 1;
+    if ( !(xx = CALLOC((size_t)nx_max, sizeof(double))) ) {
 	fprintf(stderr, "Could not allocate values array.\n");
 	exit(1);
     }
-    for (p = xx; scanf("%lf", p) == 1; p++) {
-	if (p + 1 == xx + m) {
+    for (x = xx; scanf("%lf", x) == 1; x++) {
+	if (x + 1 == xx + nx_max) {
 	    int m1;
 	    double *t;
 
-	    m1 = 2 * m;
+	    m1 = 2 * nx_max;
 	    if (m1 > INT_MAX / sizeof(double)) {
 		fprintf(stderr, "Values array wants more than %d values."
 			"  Get real.\n", INT_MAX);
 		exit(1);
 	    }
-	    if ( !(t = realloc(xx, m1 * sizeof(double))) ) {
+	    if ( !(t = REALLOC(xx, m1 * sizeof(double))) ) {
 		fprintf(stderr, "Could not reallocate values array.\n");
 		exit(1);
 	    }
 	    xx = t;
-	    p = xx + m - 1;
-	    m = m1;
+	    x = xx + nx_max - 1;
+	    nx_max = m1;
 	}
     }
-    nx = p - xx;
-    if ( !(ii = calloc((size_t)nx, sizeof(int))) ) {
+    nx = x - xx;
+    if ( !(list = CALLOC((size_t)(nb + nx), sizeof(int))) ) {
 	fprintf(stderr, "Could not allocate index array.\n");
 	exit(1);
     }
 
     /* Bin and print */
-    BISearchArr(vv, nv, xx, nx, ii, c);
-    for (n = 0; n < nx; n++) {
-	printf("%d\n", ii[n]);
-    }
-    if ( (f3 = fdopen(3, "w")) ) {
-	for (n = 0; n < nv - 1; n++) {
-	    fprintf(f3, "%u\n", c[n]);
+    list = BISearch_DDataToList(xx, nx, bnds, nb, list);
+    for (n = 0; n < nb - 1; n++) {
+	int i;				/* Interval index */
+
+	printf("%.2f to %.2f: ", bnds[n], bnds[n + 1]);
+	for (i = BISearch_1stIndex(list, n); i != -1; ) {
+	    printf("%.2f ", xx[i]);
+	    i = BISearch_NextIndex(list, i);
 	}
+	printf("\n");
     }
 
-    free(vv);
-    free(ii);
-    free(c);
-    free(xx);
+    FREE(bnds);
+    FREE(list);
+    FREE(xx);
 
     return 0;
 }
