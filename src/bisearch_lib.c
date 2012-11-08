@@ -1,5 +1,5 @@
 /*
-   -	BISearch --
+   -	BiSearch --
    -		Define functions that search arrays for intervals that
    -		contain given values.  See bisearch (n).
    -
@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.12 $ $Date: 2012/10/18 19:27:25 $
+   .	$Revision: 1.13 $ $Date: 2012/10/18 21:12:40 $
  */
 
 /*
@@ -40,7 +40,7 @@
 #include <stdio.h>
 #include "bisearch_lib.h"
 
-int BISearchD(double val, double *bnds, int n_bnds)
+int BiSearchD(double val, double *bnds, int n_bnds)
 {
     int jl;		/* Index for lower bound */
     int jm;		/* Index for midpoint in bisection search */
@@ -75,7 +75,7 @@ int BISearchD(double val, double *bnds, int n_bnds)
     }
     return jl;
 }
-int BISearchF(float val, float *bnds, int n_bnds)
+int BiSearchF(float val, float *bnds, int n_bnds)
 {
     int jl;		/* Index for lower bound */
     int jm;		/* Index for midpoint in bisection search */
@@ -120,7 +120,7 @@ int BISearchF(float val, float *bnds, int n_bnds)
  */
 
 /*
-   BISearch_1stIndex and BISearch_NextIndex use the return value as follows.
+   BiSearch_1stIndex and BiSearch_NextIndex use the return value as follows.
 
    Suppose the dat is the array of binned data, and bnds is the array of
    data boundaries into which data from dat are binned.
@@ -141,7 +141,7 @@ int BISearchF(float val, float *bnds, int n_bnds)
    interval n.
  */
 
-void BISearch_DDataToList(double *data, int n_data, double *bnds, int n_bnds,
+void BiSearch_DDataToList(double *data, int n_data, double *bnds, int n_bnds,
 	int *lists)
 {
     int n_intvls;
@@ -161,7 +161,7 @@ void BISearch_DDataToList(double *data, int n_data, double *bnds, int n_bnds,
 
     /* Traverse data array in reverse so that indeces in lists will increase. */
     for (n_datum = n_data - 1; n_datum >= 0; n_datum--) {
-	if ( (n_intvl = BISearchD(data[n_datum], bnds, n_bnds)) >= 0 ) {
+	if ( (n_intvl = BiSearchD(data[n_datum], bnds, n_bnds)) >= 0 ) {
 	    if ( heads[n_intvl] == -1 ) {
 		heads[n_intvl] = n_datum;
 	    } else {
@@ -171,7 +171,7 @@ void BISearch_DDataToList(double *data, int n_data, double *bnds, int n_bnds,
 	}
     }
 }
-void BISearch_FDataToList(float *data, int n_data, float *bnds, int n_bnds,
+void BiSearch_FDataToList(float *data, int n_data, float *bnds, int n_bnds,
 	int *lists)
 {
     int n_intvls;
@@ -191,7 +191,7 @@ void BISearch_FDataToList(float *data, int n_data, float *bnds, int n_bnds,
 
     /* Traverse data array in reverse so that indeces in lists will increase. */
     for (n_datum = n_data - 1; n_datum >= 0; n_datum--) {
-	if ( (n_intvl = BISearchF(data[n_datum], bnds, n_bnds)) >= 0 ) {
+	if ( (n_intvl = BiSearchF(data[n_datum], bnds, n_bnds)) >= 0 ) {
 	    if ( heads[n_intvl] == -1 ) {
 		heads[n_intvl] = n_datum;
 	    } else {
@@ -208,7 +208,7 @@ void BISearch_FDataToList(float *data, int n_data, float *bnds, int n_bnds,
    data occupies that interval.
  */
 
-int BISearch_1stIndex(int *lists, int n_intvl)
+int BiSearch_1stIndex(int *lists, int n_intvl)
 {
     return lists[n_intvl + 1];
 }
@@ -219,7 +219,7 @@ int BISearch_1stIndex(int *lists, int n_intvl)
    data occupy the interval.
  */
 
-int BISearch_NextIndex(int *lists, int n_datum)
+int BiSearch_NextIndex(int *lists, int n_datum)
 {
     return *(lists + 1 + lists[0] + n_datum);
 }
