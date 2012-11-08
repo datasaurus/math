@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.6 $ $Date: 2011/11/28 16:43:52 $
+   .	$Revision: 1.7 $ $Date: 2012/04/06 21:06:29 $
  */
 
 #include <stdio.h>
@@ -90,7 +90,8 @@ int main(int argc, char *argv[])
     } else if (lo >= 0.0 && hi > 0.0) {
 	/* Single exponential curve */
 	for (n = 0; n < N; n++) {
-	    printf("%d %f\n", n, lo - 1 + pow(hi + 1 - lo, (double)n / (N - 1)));
+	    printf("%d %f\n",
+		    n, lo - 1 + pow(hi + 1 - lo, (double)n / (N - 1)));
 	}
     } else if (lo <= 0.0 && hi < 0.0) {
 	/* Single logarithmic curve */
