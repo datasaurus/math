@@ -1,7 +1,7 @@
 /*
    -	bisearch_app.c --
    -		This file defines an application that does bisection searches.
-   -		It is meant to exercise the BISearch and BISearchArr functions,
+   -		It is meant to exercise the BiSearch and BiSearchArr functions,
    - 		not be fast or elegant.
    -
    .	Copyright (c) 2011, Gordon D. Carrie. All rights reserved.
@@ -31,7 +31,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.10 $ $Date: 2012/10/18 19:27:39 $
+   .	$Revision: 1.11 $ $Date: 2012/10/18 21:12:40 $
  */
 
 #include <stdlib.h>
@@ -100,14 +100,14 @@ int main(int argc, char *argv[])
     }
 
     /* Bin and print */
-    BISearch_DDataToList(xx, nx, bnds, nb, lists);
+    BiSearch_DDataToList(xx, nx, bnds, nb, lists);
     for (n = 0; n < nb - 1; n++) {
 	int i;				/* Interval index */
 
 	printf("%.2f to %.2f: ", bnds[n], bnds[n + 1]);
-	for (i = BISearch_1stIndex(lists, n); i != -1; ) {
+	for (i = BiSearch_1stIndex(lists, n); i != -1; ) {
 	    printf("%.2f ", xx[i]);
-	    i = BISearch_NextIndex(lists, i);
+	    i = BiSearch_NextIndex(lists, i);
 	}
 	printf("\n");
     }
