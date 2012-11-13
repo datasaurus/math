@@ -30,15 +30,16 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.14 $ $Date: 2012/11/08 21:14:07 $
+   .	$Revision: 1.15 $ $Date: 2012/11/13 22:44:58 $
  */
 
 /*
 	Ref: Press, et al., Numerical Recipes in C, 2nd Edition.  p. 117.
  */
 
-#include <stdio.h>
 #include "unix_defs.h"
+#include <math.h>
+#include <stdio.h>
 #include "bisearch_lib.h"
 
 int BiSearchD(double val, double *bnds, int n_bnds)
