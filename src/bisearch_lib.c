@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.13 $ $Date: 2012/10/18 21:12:40 $
+   .	$Revision: 1.14 $ $Date: 2012/11/08 21:14:07 $
  */
 
 /*
@@ -38,6 +38,7 @@
  */
 
 #include <stdio.h>
+#include "unix_defs.h"
 #include "bisearch_lib.h"
 
 int BiSearchD(double val, double *bnds, int n_bnds)
@@ -46,6 +47,9 @@ int BiSearchD(double val, double *bnds, int n_bnds)
     int jm;		/* Index for midpoint in bisection search */
     int ju;		/* Index for upper bound */
 
+    if ( !isfinite(val) ) {
+	return -1;
+    }
     jl = 0;
     ju = n_bnds - 1;
     if (bnds[n_bnds - 1] > bnds[0]) {	/* bnds is increasing */ 
@@ -81,6 +85,9 @@ int BiSearchF(float val, float *bnds, int n_bnds)
     int jm;		/* Index for midpoint in bisection search */
     int ju;		/* Index for upper bound */
 
+    if ( !isfinite(val) ) {
+	return -1;
+    }
     jl = 0;
     ju = n_bnds - 1;
     if (bnds[n_bnds - 1] > bnds[0]) {	/* bnds is increasing */ 
