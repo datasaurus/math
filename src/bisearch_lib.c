@@ -1,7 +1,7 @@
 /*
    -	BiSearch --
    -		Define functions that search arrays for intervals that
-   -		contain given values.  See bisearch (n).
+   -		contain given values.  See bisearch_lib (3).
    -
    .	Copyright (c) 2011, Gordon D. Carrie. All rights reserved.
    .	
@@ -30,94 +30,20 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.15 $ $Date: 2012/11/13 22:44:58 $
- */
-
-/*
-	Ref: Press, et al., Numerical Recipes in C, 2nd Edition.  p. 117.
+   .	$Revision: 1.16 $ $Date: 2012/11/13 22:48:57 $
  */
 
 #include "unix_defs.h"
+#include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
 #include "bisearch_lib.h"
 
-int BiSearchD(double val, double *bnds, int n_bnds)
-{
-    int jl;		/* Index for lower bound */
-    int jm;		/* Index for midpoint in bisection search */
-    int ju;		/* Index for upper bound */
-
-    if ( !isfinite(val) ) {
-	return -1;
-    }
-    jl = 0;
-    ju = n_bnds - 1;
-    if (bnds[n_bnds - 1] > bnds[0]) {	/* bnds is increasing */ 
-	if (val < bnds[0] || val >= bnds[n_bnds - 1]) {
-	    return -1;
-	}
-	while (ju - jl > 1) {
-	    jm = (jl + ju) / 2;
-	    if (val >= bnds[jm]) {
-		jl = jm;
-	    } else {
-		ju = jm;
-	    }
-	}
-    } else {				/* bnds is decreasing */ 
-	if (val > bnds[0] || val <= bnds[n_bnds - 1]) {
-	    return -1;
-	}
-	while (ju - jl > 1) {
-	    jm = (jl + ju) / 2;
-	    if (val <= bnds[jm]) {
-		jl = jm;
-	    } else {
-		ju = jm;
-	    }
-	}
-    }
-    return jl;
-}
-int BiSearchF(float val, float *bnds, int n_bnds)
-{
-    int jl;		/* Index for lower bound */
-    int jm;		/* Index for midpoint in bisection search */
-    int ju;		/* Index for upper bound */
-
-    if ( !isfinite(val) ) {
-	return -1;
-    }
-    jl = 0;
-    ju = n_bnds - 1;
-    if (bnds[n_bnds - 1] > bnds[0]) {	/* bnds is increasing */ 
-	if (val < bnds[0] || val >= bnds[n_bnds - 1]) {
-	    return -1;
-	}
-	while (ju - jl > 1) {
-	    jm = (jl + ju) / 2;
-	    if (val >= bnds[jm]) {
-		jl = jm;
-	    } else {
-		ju = jm;
-	    }
-	}
-    } else {				/* bnds is decreasing */ 
-	if (val > bnds[0] || val <= bnds[n_bnds - 1]) {
-	    return -1;
-	}
-	while (ju - jl > 1) {
-	    jm = (jl + ju) / 2;
-	    if (val <= bnds[jm]) {
-		jl = jm;
-	    } else {
-		ju = jm;
-	    }
-	}
-    }
-    return jl;
-}
+/* Comparison functions for bsearch */
+static int compar_f_asc(const void *, const void *);
+static int compar_f_des(const void *, const void *);
+static int compar_d_asc(const void *, const void *);
+static int compar_d_des(const void *, const void *);
 
 /*
    Put values that share intervals into linked lists for array data, which
@@ -155,6 +81,7 @@ void BiSearch_DDataToList(double *data, int n_data, double *bnds, int n_bnds,
     int n_intvls;
     int *heads, *indeces;
     int n, n_intvl, n_datum;
+    int (*compar)(const void *, const void *);
 
     for (n = 0; n < n_data + n_bnds; n++) {
 	lists[n] = -1;
@@ -166,10 +93,16 @@ void BiSearch_DDataToList(double *data, int n_data, double *bnds, int n_bnds,
     lists[0] = n_intvls;
     heads = lists + 1;
     indeces = lists + 1 + n_intvls;
+    compar = (bnds[0] < bnds[1]) ? compar_d_asc : compar_d_des;
 
     /* Traverse data array in reverse so that indeces in lists will increase. */
     for (n_datum = n_data - 1; n_datum >= 0; n_datum--) {
-	if ( (n_intvl = BiSearchD(data[n_datum], bnds, n_bnds)) >= 0 ) {
+	double *intvl_p;
+
+	intvl_p = bsearch(data + n_datum, bnds, n_bnds - 1, sizeof(double),
+		compar);
+	if ( intvl_p ) {
+	    n_intvl = intvl_p - bnds;
 	    if ( heads[n_intvl] == -1 ) {
 		heads[n_intvl] = n_datum;
 	    } else {
@@ -185,6 +118,7 @@ void BiSearch_FDataToList(float *data, int n_data, float *bnds, int n_bnds,
     int n_intvls;
     int *heads, *indeces;
     int n, n_intvl, n_datum;
+    int (*compar)(const void *, const void *);
 
     for (n = 0; n < n_data + n_bnds; n++) {
 	lists[n] = -1;
@@ -196,10 +130,16 @@ void BiSearch_FDataToList(float *data, int n_data, float *bnds, int n_bnds,
     lists[0] = n_intvls;
     heads = lists + 1;
     indeces = lists + 1 + n_intvls;
+    compar = (bnds[0] < bnds[1]) ? compar_f_asc : compar_f_des;
 
     /* Traverse data array in reverse so that indeces in lists will increase. */
     for (n_datum = n_data - 1; n_datum >= 0; n_datum--) {
-	if ( (n_intvl = BiSearchF(data[n_datum], bnds, n_bnds)) >= 0 ) {
+	float *intvl_p;
+
+	intvl_p = bsearch(data + n_datum, bnds, n_bnds - 1, sizeof(float),
+		compar);
+	if ( intvl_p ) {
+	    n_intvl = intvl_p - bnds;
 	    if ( heads[n_intvl] == -1 ) {
 		heads[n_intvl] = n_datum;
 	    } else {
@@ -208,6 +148,38 @@ void BiSearch_FDataToList(float *data, int n_data, float *bnds, int n_bnds,
 	    }
 	}
     }
+}
+
+/* Comparison function for an array of floats sorted in ascending order */
+static int compar_f_asc(const void *key_p, const void *val_p)
+{
+    float k = *(float *)key_p;
+    const float *v = val_p;
+    return (k < v[0]) ? -1 : (k >= v[1]) ? 1 : 0;
+}
+
+/* Comparison function for an array of floats sorted in descending order */
+static int compar_f_des(const void *key_p, const void *val_p)
+{
+    float k = *(float *)key_p;
+    const float *v = val_p;
+    return (k > v[0]) ? -1 : (k <= v[1]) ? 1 : 0;
+}
+
+/* Comparison function for an array of doubles sorted in ascending order */
+static int compar_d_asc(const void *key_p, const void *val_p)
+{
+    double k = *(double *)key_p;
+    const double *v = val_p;
+    return (k < v[0]) ? -1 : (k >= v[1]) ? 1 : 0;
+}
+
+/* Comparison function for an array of doubles sorted in descending order */
+static int compar_d_des(const void *key_p, const void *val_p)
+{
+    double k = *(double *)key_p;
+    const double *v = val_p;
+    return (k > v[0]) ? -1 : (k <= v[1]) ? 1 : 0;
 }
 
 /*

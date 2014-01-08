@@ -30,15 +30,13 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.7 $ $Date: 2012/10/18 21:12:40 $
+   .	$Revision: 1.8 $ $Date: 2012/11/08 21:14:07 $
  */
 
 #ifndef BISEARCH_H_
 #define BISEARCH_H_
 
-int BiSearchD(double, double *, int);
 void BiSearch_DDataToList(double *, int , double *, int, int *);
-int BiSearchF(float, float *, int);
 void BiSearch_FDataToList(float *, int , float *, int, int *);
 int BiSearch_1stIndex(int *, int);
 int BiSearch_NextIndex(int *, int);

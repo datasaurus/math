@@ -25,22 +25,20 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.10 $ $Date: 2012/10/18 21:14:43 $
+.\" $Revision: 1.11 $ $Date: 2012/11/08 21:09:17 $
 .\"
 .Pp
 .Dd $Mdocdate$
 .Dt BISEARCH_LIB 3
 .Os UNIX
 .Sh NAME
-.Nm BiSearchD,
-.Nm BiSearchF
+.Nm BiSearch_DDataToList,
+.Nm BiSearch_FDataToList,
+.Nm BiSearch_1stIndex,
+.Nm BiSearch_NextIndex
 .Nd collect data from monotonic arrays into bins with bisection
 .Sh SYNOPSIS
 .Fd "#include <bisearch_lib.h>"
-.Ft int
-.Fn BiSearchD "double datum" "double *bnds" "int n_bnds"
-.Ft int
-.Fn BiSearchF "float datum" "float *bnds" "int n_bnds"
 .Ft void
 .Fn *BiSearch_DDataToList "double *data" "int n_data" "double *bnds" "int n_bnds" "int *lists"
 .Ft void
@@ -50,44 +48,6 @@
 .Ft int
 .Fn BiSearch_NextIndex "int *lists" "int n_datum"
 .Sh DESCRIPTION
-.Fn BiSearchD
-and
-.Fn BiSearchF
-search array
-.Fa bnds
-of 
-.Fa n_bnds
-elements for an interval containing
-.Fa datum .
-Array
-.Fa bnds
-must be monotonic.
-.Pp
-If
-.Fa bnds
-is increasing, return value
-.Li i
-satisfies
-.Bd -literal -offset indent
-bnds[i] <= datum < bnds[i+1]
-.Ed
-.Pp
-If
-.Fa bnds
-is decreasing, return value
-.Li i
-satisfies
-.Bd -literal -offset indent
-bnds[i] >= datum > bnds[i+1]
-.Ed
-.Pp
-A return value of
-.Li -1
-indicates
-.Fa datum
-is not contained in any interval
-in
-.Fa bnds .
 .Pp
 .Fn BiSearch_DDataToList
 and
@@ -160,6 +120,8 @@ Here is a usage example.
     }
 .Ed
 .Pp
+.Sh SEE ALSO
+.Xr bsearch 3
 .Sh AUTHOR
 .An "Gordon Carrie"
 .Aq dev0@trekix.net
