@@ -31,14 +31,13 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.11 $ $Date: 2012/10/18 21:12:40 $
+   .	$Revision: 1.12 $ $Date: 2012/11/08 21:12:33 $
  */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
-#include "alloc.h"
 #include "bisearch_lib.h"
 
 int main(int argc, char *argv[])
@@ -54,7 +53,7 @@ int main(int argc, char *argv[])
     int *lists;			/* Interval list */
 
     nb = argc - 1;
-    if ( !(bnds = CALLOC((size_t)nb, sizeof(double))) ) {
+    if ( !(bnds = calloc((size_t)nb, sizeof(double))) ) {
 	fprintf(stderr, "Could not allocate intervals array.\n");
 	exit(1);
     }
@@ -69,7 +68,7 @@ int main(int argc, char *argv[])
 
     /* Get value array from stdin */
     nx_max = 1;
-    if ( !(xx = CALLOC((size_t)nx_max, sizeof(double))) ) {
+    if ( !(xx = calloc((size_t)nx_max, sizeof(double))) ) {
 	fprintf(stderr, "Could not allocate values array.\n");
 	exit(1);
     }
@@ -84,7 +83,7 @@ int main(int argc, char *argv[])
 			"  Get real.\n", INT_MAX);
 		exit(1);
 	    }
-	    if ( !(t = REALLOC(xx, m1 * sizeof(double))) ) {
+	    if ( !(t = realloc(xx, m1 * sizeof(double))) ) {
 		fprintf(stderr, "Could not reallocate values array.\n");
 		exit(1);
 	    }
@@ -94,7 +93,7 @@ int main(int argc, char *argv[])
 	}
     }
     nx = x - xx;
-    if ( !(lists = CALLOC((size_t)(nb + nx), sizeof(int))) ) {
+    if ( !(lists = calloc((size_t)(nb + nx), sizeof(int))) ) {
 	fprintf(stderr, "Could not allocate index array.\n");
 	exit(1);
     }
@@ -112,9 +111,9 @@ int main(int argc, char *argv[])
 	printf("\n");
     }
 
-    FREE(bnds);
-    FREE(lists);
-    FREE(xx);
+    free(bnds);
+    free(lists);
+    free(xx);
 
     return 0;
 }
