@@ -29,13 +29,12 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.3 $ $Date: 2009/12/16 17:25:02 $
+   .	$Revision: 1.4 $ $Date: 2011/11/28 16:43:52 $
  */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "err_msg.h"
 #include "angle_lib.h"
 
 /* Application name and subcommand name */
@@ -92,8 +91,6 @@ int main(int argc, char *argv[])
 	if (strcmp(cmd1v[i], cmd1) == 0) {
 	    rslt = (cb1v[i])(argc, argv);
 	    if ( !rslt ) {
-		fprintf(stderr, "%s %s failed.\n", cmd, cmd1);
-		fprintf(stderr, "%s\n", Err_Get());
 		break;
 	    } else {
 		break;
@@ -119,25 +116,19 @@ int az_wrap_cb(int argc, char *argv[])
     double c;
 
     if (argc != 4) {
-	Err_Append("Usage: ");
-	Err_Append(cmd);
-	Err_Append(" ");
-	Err_Append(cmd1);
-	Err_Append(" lon reflon\n");
+	fprintf(stderr, "Usage: %s %s lon reflon\n", cmd, cmd1);
 	return 0;
     }
     l_s = argv[2];
     if (sscanf(l_s, "%lf", &l) != 1) {
-	Err_Append("Expected float value for longitude, got ");
-	Err_Append(l_s);
-	Err_Append(".\n");
+	fprintf(stderr, "%s %s: expected float value for longitude, got %s.\n",
+		cmd, cmd1, l_s);
 	return 0;
     }
     r_s = argv[3];
     if (sscanf(r_s, "%lf", &r) != 1) {
-	Err_Append("Expected float value for reference longitude, got ");
-	Err_Append(r_s);
-	Err_Append(".\n");
+	fprintf(stderr, "%s %s: expected float value for reference longitude,"
+		" got %s.\n", cmd, cmd1, r_s);
 	return 0;
     }
     c = (use_deg ? RAD_DEG : 1.0);
@@ -152,18 +143,13 @@ int elev_wrap_cb(int argc, char *argv[])
     double c;
 
     if (argc != 3) {
-	Err_Append("Usage: ");
-	Err_Append(cmd);
-	Err_Append(" ");
-	Err_Append(cmd1);
-	Err_Append(" angle\n");
+	fprintf(stderr, "Usage: %s %s angle\n", cmd, cmd1);
 	return 0;
     }
     l_s = argv[2];
     if (sscanf(l_s, "%lf", &l) != 1) {
-	Err_Append("Expected float value for angle, got ");
-	Err_Append(l_s);
-	Err_Append(".\n");
+	fprintf(stderr, "%s %s: expected float value for angle, got %s\n",
+		cmd, cmd1, l_s);
 	return 0;
     }
     c = (use_deg ? RAD_DEG : 1.0);
@@ -177,11 +163,7 @@ int gc_dist_cb(int argc, char *argv[])
     double az1, elev1, az2, elev2, c;
 
     if (argc != 6) {
-	Err_Append("Usage: ");
-	Err_Append(cmd);
-	Err_Append(" ");
-	Err_Append(cmd1);
-	Err_Append(" elev1 az1 elev2 az2\n");
+	fprintf(stderr, "Usage: %s %s elev1 az1 elev2 az2\n", cmd, cmd1);
 	return 0;
     }
     az1_s = argv[2];
@@ -191,27 +173,23 @@ int gc_dist_cb(int argc, char *argv[])
 
     /* Get coordinates from command line arguments */
     if (sscanf(az1_s, "%lf", &az1) != 1) {
-	Err_Append("Expected float value for az1, got ");
-	Err_Append(az1_s);
-	Err_Append(".\n");
+	fprintf(stderr, "%s %s: expected float value for az1, got %s.\n",
+		cmd, cmd1, az1_s);
 	return 0;
     }
     if (sscanf(elev1_s, "%lf", &elev1) != 1) {
-	Err_Append("Expected float value for elev1, got ");
-	Err_Append(elev1_s);
-	Err_Append(".\n");
+	fprintf(stderr, "%s %s: expected float value for elev1, got %s.\n",
+		cmd, cmd1, elev1_s);
 	return 0;
     }
     if (sscanf(az2_s, "%lf", &az2) != 1) {
-	Err_Append("Expected float value for az2, got ");
-	Err_Append(az2_s);
-	Err_Append(".\n");
+	fprintf(stderr, "%s %s: expected float value for az2, got %s.\n",
+		cmd, cmd1, az2_s);
 	return 0;
     }
     if (sscanf(elev2_s, "%lf", &elev2) != 1) {
-	Err_Append("Expected float value for elev2, got ");
-	Err_Append(elev2_s);
-	Err_Append(".\n");
+	fprintf(stderr, "%s %s: expected float value for elev2, got %s.\n",
+		cmd, cmd1, elev2_s);
 	return 0;
     }
     c = (use_deg ? RAD_DEG : 1.0);
@@ -225,11 +203,7 @@ int gc_dirn_cb(int argc, char *argv[])
     double az1, elev1, az2, elev2, c;
 
     if (argc != 6) {
-	Err_Append("Usage: ");
-	Err_Append(cmd);
-	Err_Append(" ");
-	Err_Append(cmd1);
-	Err_Append(" elev1 az1 elev2 az2\n");
+	fprintf(stderr, "Usage: %s %s elev1 az1 elev2 az2\n", cmd, cmd1);
 	return 0;
     }
     az1_s = argv[2];
@@ -239,27 +213,23 @@ int gc_dirn_cb(int argc, char *argv[])
 
     /* Get coordinates from command line arguments */
     if (sscanf(az1_s, "%lf", &az1) != 1) {
-	Err_Append("Expected float value for az1, got ");
-	Err_Append(az1_s);
-	Err_Append(".\n");
+	fprintf(stderr, "%s %s: expected float value for az1, got %s.\n",
+		cmd, cmd1, az1_s);
 	return 0;
     }
     if (sscanf(elev1_s, "%lf", &elev1) != 1) {
-	Err_Append("Expected float value for elev1, got ");
-	Err_Append(elev1_s);
-	Err_Append(".\n");
+	fprintf(stderr, "%s %s: expected float value for elev1, got %s.\n",
+		cmd, cmd1, elev1_s);
 	return 0;
     }
     if (sscanf(az2_s, "%lf", &az2) != 1) {
-	Err_Append("Expected float value for az2, got ");
-	Err_Append(az2_s);
-	Err_Append(".\n");
+	fprintf(stderr, "%s %s: expected float value for az1, got %s.\n",
+		cmd, cmd1, az1_s);
 	return 0;
     }
     if (sscanf(elev2_s, "%lf", &elev2) != 1) {
-	Err_Append("Expected float value for elev2, got ");
-	Err_Append(elev2_s);
-	Err_Append(".\n");
+	fprintf(stderr, "%s %s: expected float value for elev1, got %s.\n",
+		cmd, cmd1, elev1_s);
 	return 0;
     }
     c = (use_deg ? RAD_DEG : 1.0);
@@ -283,30 +253,26 @@ int gc_step_cb(int argc, char *argv[])
 
 	az1_s = argv[2];
 	if (sscanf(az1_s, "%lf", &az1) != 1) {
-	    Err_Append("Expected float value for az1, got ");
-	    Err_Append(az1_s);
-	    Err_Append(".\n");
+	    fprintf(stderr, "%s %s: expected float value for az1, got %s.\n",
+		    cmd, cmd1, az1_s);
 	    return 0;
 	}
 	elev1_s = argv[3];
 	if (sscanf(elev1_s, "%lf", &elev1) != 1) {
-	    Err_Append("Expected float value for elev1, got ");
-	    Err_Append(elev1_s);
-	    Err_Append(".\n");
+	    fprintf(stderr, "%s %s: expected float value for elev1, got %s.\n",
+		    cmd, cmd1, elev1_s);
 	    return 0;
 	}
 	dirn_s = argv[4];
 	if (sscanf(dirn_s, "%lf", &dirn) != 1) {
-	    Err_Append("Expected float value for azimuth, got ");
-	    Err_Append(dirn_s);
-	    Err_Append(".\n");
+	    fprintf(stderr, "%s %s: expected float value for azimuth, "
+		    "got %s.\n", cmd, cmd1, dirn_s);
 	    return 0;
 	}
 	dist_s = argv[5];
 	if (sscanf(dist_s, "%lf", &dist) != 1) {
-	    Err_Append("Expected float value for range, got ");
-	    Err_Append(dist_s);
-	    Err_Append(".\n");
+	    fprintf(stderr, "%s %s: expected float value for azimuth, "
+		    "got %s.\n", cmd, cmd1, dist_s);
 	    return 0;
 	}
 	c = use_deg ? RAD_DEG : 1.0;
@@ -314,11 +280,8 @@ int gc_step_cb(int argc, char *argv[])
 	c = use_deg ? DEG_RAD : 1.0;
 	printf("%f %f\n", az2 * c, elev2 * c);
     } else {
-	Err_Append("Usage: ");
-	Err_Append(cmd);
-	Err_Append(" ");
-	Err_Append(cmd1);
-	Err_Append(" [lon lat direction distance]\n");
+	fprintf(stderr, "Usage: %s %s lon lat direction distance\n",
+		cmd, cmd1);
 	return 0;
     }
     return 1;
