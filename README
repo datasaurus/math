@@ -1,0 +1,12 @@
+This project provides the following applications and libraries.
+
+angle				- command line application performs calculations
+				  with angles on the sphere. See angle (1).
+bighi biglrg biglo bigsml	- applications that print sequences of numbers
+				  with large and small steps at large and small
+				  magnitudes.  See bighi (1), biglrg (1),
+				  biglo (1), bigsml (1).
+bisearch_lib.c			- C functions that puts sets of numbers into
+				  sets of intervals. See bisearch_lib (3).
+angle_lib.c			- C functions that perform calculations
+				  with angles on the sphere. See angle_lib (3).
