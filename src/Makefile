@@ -24,15 +24,12 @@
 #
 # Please send feedback to dev0@trekix.net
 
-EXECS = angle bighi biglrg biglo bigsml bisearch bin_grid arr32
+EXECS = angle bighi biglrg biglo bigsml bisearch bin_grid
 
 CC = cc -std=c99
 CFLAGS = -g -Wall -Wmissing-prototypes
 
 all : ${EXECS}
-
-arr32 : arr32.c
-	${CC} ${CFLAGS} -o arr32 arr32.c
 
 BIN_GRID_OBJ = bin_grid.o bisearch_lib.o
 bin_grid : ${BIN_GRID_OBJ}
