@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.16 $ $Date: 2012/11/13 22:48:57 $
+   .	$Revision: 1.17 $ $Date: 2014/01/08 17:18:45 $
  */
 
 #include "unix_defs.h"
@@ -99,9 +99,9 @@ void BiSearch_DDataToList(double *data, int n_data, double *bnds, int n_bnds,
     for (n_datum = n_data - 1; n_datum >= 0; n_datum--) {
 	double *intvl_p;
 
-	intvl_p = bsearch(data + n_datum, bnds, n_bnds - 1, sizeof(double),
-		compar);
-	if ( intvl_p ) {
+	if ( isfinite(data[n_datum])
+		&& (intvl_p = bsearch(data + n_datum, bnds, n_bnds - 1,
+			sizeof(double), compar)) ) {
 	    n_intvl = intvl_p - bnds;
 	    if ( heads[n_intvl] == -1 ) {
 		heads[n_intvl] = n_datum;
@@ -136,9 +136,9 @@ void BiSearch_FDataToList(float *data, int n_data, float *bnds, int n_bnds,
     for (n_datum = n_data - 1; n_datum >= 0; n_datum--) {
 	float *intvl_p;
 
-	intvl_p = bsearch(data + n_datum, bnds, n_bnds - 1, sizeof(float),
-		compar);
-	if ( intvl_p ) {
+	if ( isfinite(data[n_datum])
+		&& (intvl_p = bsearch(data + n_datum, bnds, n_bnds - 1,
+			sizeof(float), compar)) ) {
 	    n_intvl = intvl_p - bnds;
 	    if ( heads[n_intvl] == -1 ) {
 		heads[n_intvl] = n_datum;
