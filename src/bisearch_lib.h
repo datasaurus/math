@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.8 $ $Date: 2012/11/08 21:14:07 $
+   .	$Revision: 1.9 $ $Date: 2014/01/08 17:18:45 $
  */
 
 #ifndef BISEARCH_H_

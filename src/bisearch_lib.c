@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.17 $ $Date: 2014/01/08 17:18:45 $
+   .	$Revision: 1.18 $ $Date: 2014/12/02 21:22:03 $
  */
 
 #include "unix_defs.h"
